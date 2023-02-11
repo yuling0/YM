@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3d9b02242234248ae4690553397221, type: 3}
+  m_Name: PterosaurInfo
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  icon: {fileID: 2800000, guid: 72e4428b780e1c44dbfc8a43c1ff531d, type: 3}
+  unitName: "\u7FFC\u9F99"
+  hp: 0
+  atk: 0
+  def: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  moveSpeed: {x: 3, y: 4}
+  retreatSpeed: {x: 0, y: 0}
+  diveAnitcipationSpeed: {x: 1, y: 2}
+  diveSpeed: {x: 4, y: 5}
+  smashSpeed: {x: 2, y: 5}
+  CloseCombatMaxDistanceX: 2
+  jetFlameXAxisDistanceRange: {x: 2, y: 3.5}
+  jetFlameYAxisDistanceRange: {x: 0.5, y: 1}
+  jetFlameDurationTime: 2
+  generateFlameParticleIntervalTime: 0.1
+  emitCountRange: {x: 4, y: 10}
+  diveXAxisDistanceRange: {x: 2.5, y: 3.5}
+  diveYAxisDistanceRange: {x: 3, y: 4}
+  smashXAxisDistanceRange: {x: 0.5, y: 2.5}
+  smashYAxisDistanceRange: {x: 2.5, y: 3.5}
+  headButtXAxisDistanceRange: {x: 0.8, y: 2}
+  headButtYAxisDistanceRange: {x: 1, y: 1.5}
+  tailFlickXAxisDistanceRange: {x: 0.2, y: 1.5}
+  tailFlickYAxisDistanceRange: {x: 1.5, y: 2.5}

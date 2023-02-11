@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf9fed53610add42bc5045ae000754c, type: 3}
+  m_Name: Herb
+  m_EditorClassIdentifier: 
+  icon: {fileID: 1057542208760438801, guid: 3f3c73eaa8d6f7f4f85786c843db1c82, type: 3}
+  id: 20
+  itemName: "\u836F\u8349"
+  type: 1
+  Description: "\u9644\u8FD1\u68EE\u7ACB\u91C7\u7684\u836F\u8349\u3002\u8FD9\u79CD\u836F\u8349\u7684\u5473\u9053\u5F88\u8BA8\u538C\u3002HP80\u56DE\u590D"
+  price: 12
+  val: 80
+  count: 0
+  maxCapacity: 1

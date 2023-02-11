@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Monster
+  - Weakness
+  - DamageDetectObject
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Wall
+  - Player
+  - TouchableMonster
+  - UntouchableMonster
+  - NoWalkable
+  - Road
+  - Plane
+  - OneWayPlatform
+  - PenetrablePlayer
+  - Slope
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 1577191829
+    locked: 0
+  - name: InteriorDecoration
+    uniqueID: 3214070825
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2086837305
+    locked: 0
+  - name: OuterDecoration
+    uniqueID: 1621591583
+    locked: 0
+  - name: Monster
+    uniqueID: 2522936455
+    locked: 0
+  - name: Character
+    uniqueID: 1002349401
+    locked: 0
+  - name: Effects
+    uniqueID: 1766284259
+    locked: 0
+  - name: OuterMost
+    uniqueID: 3876983537
+    locked: 0

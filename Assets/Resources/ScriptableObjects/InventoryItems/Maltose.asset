@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf9fed53610add42bc5045ae000754c, type: 3}
+  m_Name: Maltose
+  m_EditorClassIdentifier: 
+  icon: {fileID: 5894798398252248423, guid: 434f28be5e0dc2b4a8df7c9aa0427cb6, type: 3}
+  id: 22
+  itemName: "\u5706\u5F62\u9EA6\u82BD\u7CD6"
+  type: 0
+  Description: "\u5706\u5F62\u7684\u9EA6\u82BD\u7CD6\u3002\u6709\u8349\u8393\u5473\u3001\u9999\u74DC\u5473\u3001\u67E0\u6AAC\u5473\u3001\u6A58\u5B50\u5473\u3002\u98DF\u7528\u56DE\u590D\u5C11\u91CFHP"
+  price: 8
+  val: 60
+  count: 0
+  maxCapacity: 3

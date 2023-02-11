@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4a1938487109b44a95f47c8a231b2d, type: 3}
+  m_Name: ArcheInfo
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  icon: {fileID: 2800000, guid: 6c7a59cedeb51de409eca33a16fdb870, type: 3}
+  unitName: Arche
+  hp: 100
+  atk: 15
+  def: 8
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1664
+  mp: 20
+  level: 1
+  spirit: 0
+  resistance: 0
+  currentExperience: 0
+  requireExperience: 0
+  walkSpeed: 1.5
+  runSpeed: 3.5
+  airSpeed: 3.5
+  jumpForce: 350
+  KnightThrustVelocity: 4
+  LeapingSlashVelocity: {x: 5, y: 2.5, z: 0}
+  WideSlashVelocity: 2.5
+  JumpKickVelocity: {x: 5, y: 2.5, z: 0}
+  JumpKickBufferVelocity: 4
+  LeapingSlashBufferVelocity: 4
+  ForwardRollVelocity: 2.5
+  BackwardRollVelocity: -2.5
+  ComboAttackForwardVelocity: 2.5
+  ComboAttackUpVelocity: 2.5
+  BackwardLeapingSlashVelocity: {x: 3, y: 2.5}
+  WheelSlashVelocity: 2.5

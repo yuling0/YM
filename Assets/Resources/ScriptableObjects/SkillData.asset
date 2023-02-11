@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6451bc01f1b1c499c4cda0b51089b4, type: 3}
+  m_Name: SkillData
+  m_EditorClassIdentifier: 
+  skillItemList:
+  - skillName: ForwardRoll
+    inputs: 23
+    inputInterval: 0.4
+    resetTime: 0.15
+    delay: 0
+    priority: 2
+    ignoreObliqueInput: 0
+    description: "\u524D\u7FFB\u6EDA\uFF08\u4E0B+\u53F3\uFF09"
+  - skillName: BackwardRoll
+    inputs: 21
+    inputInterval: 0.4
+    resetTime: 0.15
+    delay: 0
+    priority: 2
+    ignoreObliqueInput: 0
+    description: "\u540E\u7FFB\u6EDA\uFF08\u4E0B+\u5DE6\uFF09"
+  - skillName: JumpKickRight
+    inputs: 69x
+    inputInterval: 0.4
+    resetTime: 0.15
+    delay: 0
+    priority: 3
+    ignoreObliqueInput: 0
+    description: "\u8DF3\u8DC3\u8E22(\u53F3 + \u4E0A + \u653B\u51FB)"
+  - skillName: JumpKickLeft
+    inputs: 47x
+    inputInterval: 0.4
+    resetTime: 0.15
+    delay: 0
+    priority: 3
+    ignoreObliqueInput: 0
+    description: "\u8DF3\u8DC3\u8E22(\u5DE6 + \u4E0A + \u653B\u51FB)"
+  - skillName: LeapingSlashRight
+    inputs: 89x
+    inputInterval: 0.4
+    resetTime: 0.15
+    delay: 0
+    priority: 5
+    ignoreObliqueInput: 0
+    description: "\u8DF3\u8DC3\u56DE\u65CB\u65A9( \u4E0A + \u53F3 + \u653B\u51FB)"
+  - skillName: LeapingSlashLeft
+    inputs: 87x
+    inputInterval: 0.4
+    resetTime: 0.15
+    delay: 0
+    priority: 5
+    ignoreObliqueInput: 0
+    description: "\u8DF3\u8DC3\u56DE\u65CB\u65A9(\u4E0A + \u5DE6 + \u653B\u51FB)"
+  - skillName: WideSlashLeft
+    inputs: 4x
+    inputInterval: 0.2
+    resetTime: 0.1
+    delay: 0.05
+    priority: 1
+    ignoreObliqueInput: 0
+    description: "\u5927\u8303\u56F4\u65A9\u51FB\uFF08\u5DE6 + \u653B\u51FB\uFF09"
+  - skillName: WideSlashRight
+    inputs: 6x
+    inputInterval: 0.2
+    resetTime: 0.1
+    delay: 0.05
+    priority: 1
+    ignoreObliqueInput: 0
+    description: "\u5927\u8303\u56F4\u65A9\u51FB\uFF08\u53F3\uFF09"
+  - skillName: Thrust
+    inputs: 2x
+    inputInterval: 0.2
+    resetTime: 0.1
+    delay: 0
+    priority: 1
+    ignoreObliqueInput: 1
+    description: "\u523A\u51FB\uFF08\u4E0B+\u653B\u51FB\uFF09"
+  - skillName: NormalAttack
+    inputs: x
+    inputInterval: 0.2
+    resetTime: 0.05
+    delay: 0.1
+    priority: 0
+    ignoreObliqueInput: 0
+    description: "\u666E\u901A\u65A9\u51FB"
+  - skillName: WideSlashLeft
+    inputs: x4
+    inputInterval: 0.2
+    resetTime: 0.1
+    delay: 0.1
+    priority: 1
+    ignoreObliqueInput: 0
+    description: "\u5927\u8303\u56F4\u65A9\u51FB\uFF08 \u653B\u51FB +\u5DE6\uFF09"
+  - skillName: WideSlashRight
+    inputs: x6
+    inputInterval: 0.2
+    resetTime: 0.1
+    delay: 0.05
+    priority: 1
+    ignoreObliqueInput: 0
+    description: "\u5927\u8303\u56F4\u65A9\u51FB\uFF08 \u653B\u51FB +\u53F3\uFF09"
+  - skillName: Thrust
+    inputs: x2
+    inputInterval: 0.2
+    resetTime: 0.1
+    delay: 0
+    priority: 1
+    ignoreObliqueInput: 1
+    description: "\u523A\u51FB\uFF08\u653B\u51FB + \u4E0B\uFF09"
+  - skillName: UpSlash
+    inputs: 8x
+    inputInterval: 0.2
+    resetTime: 0.1
+    delay: 0.05
+    priority: 1
+    ignoreObliqueInput: 1
+    description: "\u4E0A\u65A9\uFF08\u4E0A + \u653B\u51FB\uFF09"
+  - skillName: UpSlash
+    inputs: x8
+    inputInterval: 0.2
+    resetTime: 0.2
+    delay: 0.05
+    priority: 1
+    ignoreObliqueInput: 1
+    description: "\u4E0A\u65A9\uFF08\u4E0A + \u653B\u51FB\uFF09"
+  - skillName: BackwardLeapingSlashLeft
+    inputs: 42x
+    inputInterval: 0.3
+    resetTime: 0.2
+    delay: 0
+    priority: 6
+    ignoreObliqueInput: 0
+    description: "\u53CD\u5411\u8DF3\u8DC3\u56DE\u65CB\u65A9(\u5DE6 + \u4E0B + \u653B\u51FB)"
+  - skillName: BackwardLeapingSlashRight
+    inputs: 62x
+    inputInterval: 0.3
+    resetTime: 0.2
+    delay: 0
+    priority: 6
+    ignoreObliqueInput: 0
+    description: "\u53CD\u5411\u8DF3\u8DC3\u56DE\u65CB\u65A9(\u53F3 + \u4E0B + \u653B\u51FB)"
+  - skillName: Up
+    inputs: 8
+    inputInterval: 0.1
+    resetTime: 0.1
+    delay: 0.1
+    priority: 0
+    ignoreObliqueInput: 0
+    description: "\u4E0A"
+  - skillName: Down
+    inputs: 2
+    inputInterval: 0.1
+    resetTime: 0.1
+    delay: 0.1
+    priority: 0
+    ignoreObliqueInput: 0
+    description: "\u4E0B"
+  - skillName: Left
+    inputs: 4
+    inputInterval: 0.1
+    resetTime: 0.05
+    delay: 0.15
+    priority: 0
+    ignoreObliqueInput: 0
+    description: "\u5DE6"
+  - skillName: Right
+    inputs: 6
+    inputInterval: 0.1
+    resetTime: 0.05
+    delay: 0.15
+    priority: 0
+    ignoreObliqueInput: 0
+    description: "\u53F3"
+  - skillName: BackwardLeapingSlashLeft
+    inputs: 41x
+    inputInterval: 0.3
+    resetTime: 0.2
+    delay: 0
+    priority: 6
+    ignoreObliqueInput: 0
+    description: 
+  - skillName: BackwardLeapingSlashRight
+    inputs: 63x
+    inputInterval: 0.3
+    resetTime: 0.2
+    delay: 0
+    priority: 6
+    ignoreObliqueInput: 0
+    description: 
+  - skillName: BackwardLeapingSlashLeft
+    inputs: 12x
+    inputInterval: 0.3
+    resetTime: 0.2
+    delay: 0
+    priority: 6
+    ignoreObliqueInput: 0
+    description: 
+  - skillName: BackwardLeapingSlashRight
+    inputs: 32x
+    inputInterval: 0.3
+    resetTime: 0.2
+    delay: 0
+    priority: 6
+    ignoreObliqueInput: 0
+    description: 

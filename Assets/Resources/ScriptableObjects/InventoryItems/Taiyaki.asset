@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf9fed53610add42bc5045ae000754c, type: 3}
+  m_Name: Taiyaki
+  m_EditorClassIdentifier: 
+  icon: {fileID: -4687898627669370951, guid: 3f3c73eaa8d6f7f4f85786c843db1c82, type: 3}
+  id: 21
+  itemName: "\u9CB7\u9C7C\u70E7"
+  type: 1
+  Description: "\u91CC\u9762\u662F\u5C0F\u9EA6\u7C89\u70E4\u7684\u9985\uFF0C\u505A\u6210\u9C7C\u5F62\u7684\u70B9\u5FC3\u3002\u98DF\u7528\u540E\u56DE\u590D\u5C11\u91CFHP\u3002"
+  price: 6
+  maxCapacity: 1
+  val: 50

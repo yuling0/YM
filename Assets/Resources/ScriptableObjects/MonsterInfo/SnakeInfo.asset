@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 569bee2986180c94bb52a0a045dd7e1d, type: 3}
+  m_Name: SnakeInfo
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  icon: {fileID: 2800000, guid: f426ea3929a3d184b9b7087451e3af10, type: 3}
+  id: 200002
+  unitName: 
+  hp: 80
+  atk: 5
+  def: 3
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  moveSpeed: 0.8
+  jumpForce: 5
+  detectionRange: 5
+  ChaseRange: 5
+  attackRange: 2.8
+  attackInterval: 1.2
+  optimalRange: {x: 0.5, y: 1}
+  sprintSpeed: {x: 4, y: 3}
+  biteRange: 1
+  wideBiteRange: 2.8
+  wideBiteInterval: 3
