@@ -36,4 +36,10 @@ public class DamageText : MonoBehaviour
         rectTransform.anchoredPosition += tempVel * Time.deltaTime;
         tempVel.y += g * Time.deltaTime;
     }
+
+    public void UnSpawn()
+    {
+        timer = 0f;
+        text.alpha = 0f;
+    }
 }

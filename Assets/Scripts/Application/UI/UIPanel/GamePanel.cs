@@ -34,10 +34,8 @@ public class GamePanel : BasePanel
 		img_MonsterBG = GetControl<Image>("img_MonsterBG");
         img_MonsterIcon = GetControl<Image>("img_MonsterIcon");
 		img_MonsterHP = GetControl<Image>("img_MonsterHP");
-        damageTextController = GetControl<DamageTextController>("DamageTextController");
-        _hidePanelSequence.onComplete = null;
+        //_hidePanelSequence.onComplete = null;
         EventMgr.Instance.AddMultiParameterEventListener<UpdateMonsterUIInfoArgs>(UpdateMonsterUIInfo);
-        EventMgr.Instance.AddMultiParameterEventListener<DamageTextEventArgs>(GenerateDamageText);
     }
 
     public override void OnUpdate()
@@ -56,7 +54,7 @@ public class GamePanel : BasePanel
     {
         base.OnCover();
         _hidePanelSequence.Restart();
-        GameManager.Instance.GamePauseOrContinue();
+        GameManager.GamePauseOrContinue();
     }
 
     public override void OnReveal()
@@ -65,7 +63,7 @@ public class GamePanel : BasePanel
         Debug.Log((_uIComponents[0].transform as RectTransform).anchoredPosition);
         Debug.Log((_uIComponents[1].transform as RectTransform).anchoredPosition);
         _showPanelSequence.Restart();
-        GameManager.Instance.GamePauseOrContinue();
+        GameManager.GamePauseOrContinue();
     }
     private void UpdateMonsterUIInfo(UpdateMonsterUIInfoArgs args)
     {
@@ -73,10 +71,6 @@ public class GamePanel : BasePanel
         _curMonsterSpriteRenderer = _curMonsterAbility.SpriteRenderer;
         img_MonsterHP.fillAmount = (float)_curMonsterAbility.CurHP / _curMonsterAbility.MaxHP;
         img_MonsterHP.DOFillAmount((float)args._targetValue / _curMonsterAbility.MaxHP, 1f);
-    }
-
-    private void GenerateDamageText(DamageTextEventArgs args)
-    {
-        damageTextController.GenerateDamageText(args.Damage,args.ScreenPosition);
+        ReferencePool.Instance.Release(args);
     }
 }

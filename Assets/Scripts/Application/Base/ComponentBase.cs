@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class ComponentBase : MonoBehaviour, IInit<Core>
 {
     protected Core _core;
-    public virtual void Init(Core core)
+    public virtual void Init(Core core , object userData)
     {
         _core = core;
     }
@@ -17,6 +17,10 @@ public abstract class ComponentBase : MonoBehaviour, IInit<Core>
         return _core.GetComponentInCore<T1>();
     }
 
+    public virtual void OnShowUnit(object userData)
+    {
+
+    }
     public virtual void OnEnableComponent()
     {
 
@@ -30,9 +34,17 @@ public abstract class ComponentBase : MonoBehaviour, IInit<Core>
     {
 
     }
+    public virtual void OnHideUnit(object userData)
+    {
 
+    }
     public virtual void OnDisableComponent()
     {
+
+    }
+
+    public virtual void OnRecycle(object userData) 
+    { 
 
     }
 }

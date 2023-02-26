@@ -924,7 +924,7 @@ TextureImporter:
         x: 126
         y: 280
         width: 33
-        height: 54
+        height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -945,7 +945,7 @@ TextureImporter:
         x: 167
         y: 280
         width: 29
-        height: 61
+        height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -966,7 +966,7 @@ TextureImporter:
         x: 207
         y: 280
         width: 29
-        height: 57
+        height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1048,9 +1048,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 86
-        y: 235
+        y: 242
         width: 29
-        height: 41
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1089,10 +1089,10 @@ TextureImporter:
       name: 1 (20).bin_48
       rect:
         serializedVersion: 2
-        x: 165
-        y: 233
-        width: 27
-        height: 39
+        x: 170
+        y: 243
+        width: 22
+        height: 29
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1237,9 +1237,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 42
-        y: 232
+        y: 240
         width: 11
-        height: 15
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2093,6 +2093,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: 1 (20).bin_39
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 320
+        width: 33
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 380216a8d692705498be0258b95daa41
+      internalID: 1783567944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1 (20).bin_57
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 320
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 292487be22126504eaa251e3e33f3437
+      internalID: 479367280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1 (20).bin_59
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 320
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35155ad7c17346a49a546f4a475132be
+      internalID: 953512122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -2156,6 +2219,7 @@ TextureImporter:
       1 (20).bin_92: 1950463485
       1 (20).bin_2: -1544744119
       1 (20).bin_8: -1725933876
+      1 (20).bin_59: 953512122
       1 (20).bin_37: 433080850
       1 (20).bin_95: -988353969
       1 (20).bin_66: -939033799
@@ -2185,6 +2249,7 @@ TextureImporter:
       1 (20).bin_82: -515940765
       guo2: -1715017750
       1 (20).bin_63: 1691953364
+      1 (20).bin_57: 479367280
       1 (20).bin_3: -579386839
       1 (20).bin_99: -20203033
       1 (20).bin_31: 2112549837

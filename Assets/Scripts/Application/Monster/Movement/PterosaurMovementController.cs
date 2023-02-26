@@ -12,10 +12,10 @@ public class PterosaurMovementController : MovementController
     private Collider2D[] groundCheckColliders;
     public float g;
     public float gravityVelocity;
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
-        playerTF = GameManager.Instance.PlayerTF;
+        base.Init(obj,userData);
+        playerTF = GameManager.PlayerTF;
         info = obj.info as PterosaurInfo;
         groundCheckColliders = new Collider2D[3];
         isFacingRight= false;

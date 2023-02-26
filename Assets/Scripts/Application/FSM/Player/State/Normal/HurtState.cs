@@ -15,5 +15,6 @@ public class HurtState : PlayerBaseState
     {
         base.OnEnter();
         _mc.SetVelocityZore();
+        _pfsm.skillBufferSpeed = 0f;
     }
 }

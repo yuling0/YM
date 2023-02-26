@@ -39,6 +39,9 @@ public class ArcheInfo : CombatInfo
     [VerticalGroup("属性/基本属性/HG2/Right"), LabelText("跳跃力")]
     public float jumpForce;
 
+    [VerticalGroup("属性/基本属性/HG2/Right"), LabelText("最大缓冲速度")]
+    public float maxBufferSpeed;
+
 
     [TabGroup("属性", "技能属性"),LabelText("骑士突刺的位移速度")]
     public float KnightThrustVelocity;

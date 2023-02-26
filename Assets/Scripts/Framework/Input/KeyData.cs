@@ -129,4 +129,11 @@ public class KeyData : SerializedScriptableObject
         }
     }
 
+    public void Disable()
+    {
+        for (int i = 0; i < normalKeyInfos.Count; i++)
+        {
+            normalKeyInfos[i].Disable();
+        }
+    }
 }

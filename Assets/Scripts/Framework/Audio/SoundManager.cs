@@ -56,7 +56,6 @@ public class SoundManager : SingletonBase<SoundManager>
         clipDic = new Dictionary<string, AudioClip>();
         serial = 0;
         resourceMgr = ResourceMgr.Instance;
-        Init();
     }
     public void Init()
     {

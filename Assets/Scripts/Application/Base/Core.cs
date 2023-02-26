@@ -11,66 +11,106 @@ public class Core : UnitLogic
     private ComponentBase[] _components;
     [InlineEditor]
     public UnitInfo info;
+    [SerializeField]
+    private bool enable;
+//# if UNITY_EDITOR
+//    private void Awake()
+//    {
+//        OnInit(null, null);
+//    }
+//    private void OnEnable()
+//    {
+//        foreach (var c in _components)
+//        {
+//            c.OnEnableComponent(null);
+//        }
+//    }
+//    private void OnDisable()
+//    {
+//        foreach (var c in _components)
+//        {
+//            c.OnDisableComponent(null);
+//        }
+//    }
+//    public void Update()
+//    {
+//        foreach (var c in _components)
+//        {
+//            c.OnUpdateComponent();
+//        }
+//    }
 
-# if UNITY_EDITOR
-    private void Awake()
-    {
-        OnInit(null, null);
-    }
-    private void OnEnable()
-    {
-        foreach (var c in _components)
-        {
-            c.OnEnableComponent();
-        }
-    }
-    private void OnDisable()
-    {
-        foreach (var c in _components)
-        {
-            c.OnDisableComponent();
-        }
-    }
-    public void Update()
-    {
-        foreach (var c in _components)
-        {
-            c.OnUpdateComponent();
-        }
-    }
+//    public void FixedUpdate()
+//    {
+//        foreach (var c in _components)
+//        {
+//            c.OnFixedUpdateComponent();
+//        }
+//    }
+//#endif
 
-    public void FixedUpdate()
+    public bool Enable
     {
-        foreach (var c in _components)
+        set
         {
-            c.OnFixedUpdateComponent();
+            if (value)
+            {
+                EnableComponent();
+            }
+            else
+            {
+                DisableComponent();
+            }
+            enable = value;
         }
+        get { return enable; }
     }
-#endif
     public override void OnInit(Unit unit, object userData)
     {
         base.OnInit(unit, userData);
-        InitComponent();
+        InitComponent(userData);
     }
 
     public override void OnShow(object userData)
     {
         foreach (var c in _components)
         {
+            c.OnShowUnit(userData);
+        }
+        Enable = true;
+    }
+
+    private void EnableComponent()
+    {
+        foreach (var c in _components)
+        {
             c.OnEnableComponent();
         }
     }
-
-    public override void OnHide(object userData)
+    private void DisableComponent()
     {
         foreach (var c in _components)
         {
             c.OnDisableComponent();
         }
     }
-
+    public override void OnHide(object userData)
+    {
+        foreach (var c in _components)
+        {
+            c.OnHideUnit(userData);
+        }
+    }
+    public override void OnRecycle(object userData)
+    {
+        foreach (var c in _components)
+        {
+            c.OnRecycle(userData);
+        }
+    }
     public override void OnUpdate()
     {
+        if (!enable) return;
         foreach (var c in _components)
         {
             c.OnUpdateComponent();
@@ -79,13 +119,14 @@ public class Core : UnitLogic
 
     public override void OnFixedUpdate()
     {
+        if (!enable) return;
         foreach (var c in _components)
         {
             c.OnFixedUpdateComponent();
         }
     }
 
-    public virtual void InitComponent() 
+    public virtual void InitComponent( object userData) 
     {
         _componentDir = new Dictionary<string, ComponentBase>();
 
@@ -109,11 +150,11 @@ public class Core : UnitLogic
 
         for (int i = 0; i < _components.Length; i++)
         {
-            _components[i].Init(this);
+            _components[i].Init(this, userData);
         }
     }
     public int ID => unit.ID;
-    public string UnitName => info.unitName;
+    public string UnitName => unit.UnitName;
     public T GetComponentInCore<T>() where T : ComponentBase
     {
         string cn = typeof(T).Name;

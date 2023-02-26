@@ -33,11 +33,7 @@ public class UnitManager : SingletonBase<UnitManager>
         EventMgr.Instance.AddEventListener(Consts.E_OnHideSceneComplete, Release);
         serialId = 0;
     }
-    public void ShowUnit(string unitName, object userData, UnityAction<Unit> onShowComplete = null)
-    {
-        ShowUnit(unitName, Vector3.zero, userData, onShowComplete);
-    }
-    public void ShowUnit(string unitName ,Vector3 position, object userData, UnityAction<Unit> onShowComplete = null)
+    public void ShowUnit(string unitName ,Vector3 position, object userData, UnityAction<Unit> onShowCompleted = null)
     {
         if (string.IsNullOrEmpty(unitName))
         {
@@ -46,7 +42,7 @@ public class UnitManager : SingletonBase<UnitManager>
         UnitData unitData = unitDataContainer.GetUnitData(unitName);
         string path = unitData.resourcePath;
         UnitObject unitObject = objectPool.Spawn(path);
-        int id = unitData.isUnique ? unitData.id : serialId++;
+        int id = unitData.isUnique ? unitData.id : --serialId;
         if (unitObject == null)
         {
             ResourceMgr.Instance.LoadAssetAsync<GameObject>(path,(obj) => 
@@ -58,7 +54,7 @@ public class UnitManager : SingletonBase<UnitManager>
                 unit.OnInit(id, unitName, obj , userData);
                 addUnits.Add(unit);
                 unit.OnShow(userData);
-                onShowComplete?.Invoke(unit);
+                onShowCompleted?.Invoke(unit);
             });
         }
         else
@@ -69,10 +65,10 @@ public class UnitManager : SingletonBase<UnitManager>
             obj.transform.position = position;
             addUnits.Add(unit);
             unit.OnShow(userData);
-            onShowComplete?.Invoke(unit);
+            onShowCompleted?.Invoke(unit);
         }
     }
-    public void ShowUnit(int id ,string unitPath,Vector3 position,object userData,UnityAction<Unit> onShowComplete = null)
+    public void ShowUnit(int id ,string unitPath,Vector3 position,object userData,UnityAction<Unit> onShowCompleted = null)
     {
         UnitObject unitObject = objectPool.Spawn(unitPath);
         if (unitObject == null)
@@ -86,7 +82,7 @@ public class UnitManager : SingletonBase<UnitManager>
                 unit.OnInit(id, obj.name, obj, userData);
                 addUnits.Add(unit);
                 unit.OnShow(userData);
-                onShowComplete?.Invoke(unit);
+                onShowCompleted?.Invoke(unit);
             });
         }
         else
@@ -97,18 +93,18 @@ public class UnitManager : SingletonBase<UnitManager>
             obj.transform.position = position;
             addUnits.Add(unit);
             unit.OnShow(userData);
-            onShowComplete?.Invoke(unit);
+            onShowCompleted?.Invoke(unit);
         }
     }
 
-    public void ShowUnit(int id , Vector3 position , object userData ,UnityAction<Unit> onShowComplete = null)
+    public void ShowUnit(int id , Vector3 position , object userData ,UnityAction<Unit> onShowCompleted = null)
     {
         UnitData unitData = unitDataContainer.GetUnitData(id);
         if (unitData == null)
         {
             Debug.Log($"{id} is involid");
         }
-        ShowUnit(unitData.unitName, position, userData,onShowComplete);
+        ShowUnit(unitData.unitName, position, userData,onShowCompleted);
     }
     public void HideUnit(int id , object userData)
     {
@@ -150,11 +146,57 @@ public class UnitManager : SingletonBase<UnitManager>
         }
         return null;
     }
+    private MovementController GetMovementController(int unitId)
+    {
+        Unit unit = GetUnit(unitId);
+        if (unit == null)
+        {
+            Debug.LogError("Unit is not exist");
+            return null;
+        }
+        Core core = unit.UnitLogic as Core;
+        if (core == null)
+        {
+            Debug.LogError("Unit is not exist");
+            return null;
+        }
+        MovementController mc = core.GetComponentInCore<MovementController>();
+        return mc;
+    }
+    public void UnitMoveTowards(int unitId,float xOffset,UnityAction OnCompleted)
+    {
+        MovementController mc = GetMovementController(unitId);
+        if (mc == null)
+        {
+            return;
+        }
+        mc.MoveTowards(xOffset, OnCompleted);
+    }
 
+    public void UnitRunTowards(int unitId, float xOffset, UnityAction OnCompleted)
+    {
+        MovementController mc = GetMovementController(unitId);
+        if (mc == null)
+        {
+            return;
+        }
+        mc.RunTowards(xOffset,OnCompleted);
+    }
+
+    public void UnitFlip(int unitId, UnityAction OnCompleted)
+    {
+        MovementController mc = GetMovementController(unitId);
+        if (mc == null)
+        {
+            return;
+        }
+        mc.Flip(OnCompleted);
+    }
     public void Release()
     {
         foreach ( Unit unit in idUnitMap.Values)
         {
+            unit.OnHide();
             unit.OnRecycle();
             objectPool.UnSpawn(unit.UnitInstance);
         }

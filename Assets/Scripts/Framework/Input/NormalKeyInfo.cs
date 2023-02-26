@@ -47,6 +47,16 @@ public class NormalKeyInfo : KeyInfo
     {
 
     }
+    public override void Disable()
+    {
+        keyDown = false;
+        keyUp = false;
+        keyStay = false;
+        doubleKey = false;
+        keyDownExtend = false;
+        keyUpExtend = false;
+        keyDelay = false;
+    }
     public override void OnUpdate()
     {
         doubleKey = false;

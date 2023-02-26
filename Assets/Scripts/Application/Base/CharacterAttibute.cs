@@ -19,21 +19,23 @@ public class CharacterAttibute : ComponentBase
     public int CurHP { get => _curHP;  }
     public SpriteRenderer SpriteRenderer { get => _spriteRenderer; }
 
-    public sealed override void Init(Core core)
+    public sealed override void Init(Core core, object userData)
     {
-        base.Init(core);
+        base.Init(core,userData);
         _info = core.info as CombatInfo;
         _fsm = core.GetComponentInCore<BaseFSM>();
         _mc = core.GetComponentInCore<MovementController>();
         _spriteRenderer = _core.GetComponentInCore<AnimationController>().SpriteRenderer;
-        InitAbility();
-    }
-
-    protected virtual void InitAbility()
-    {
         _maxHP = _info.hp;
-        _curHP = _maxHP;
         _def = _info.def;
         _atk = _info.atk;
+    }
+    public override void OnEnableComponent()
+    {
+        InitAbility();
+    }
+    protected virtual void InitAbility()
+    {
+        _curHP = _maxHP;
     }
 }

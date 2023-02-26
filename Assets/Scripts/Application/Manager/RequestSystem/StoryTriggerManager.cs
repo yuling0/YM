@@ -155,4 +155,35 @@ public class StoryTriggerManager : SingletonBase<StoryTriggerManager>
 
         return true;
     }
+
+    public bool CheckEventTriggerOnCutscenePlayed(int eventId,string cutsceneName)
+    {
+        var eventData = storyEventDataContainer.GetStoryEventData(eventId);
+        if (eventData == null)
+        {
+            Debug.Log($"未包含事件id为：{eventId}的事件");
+            return false;
+        }
+        //触发条件不对 或 场景名不对
+        if (eventData.triggerType != Consts.ET_OnCutscenePlayed || eventData.triggerCondition != cutsceneName) return false;
+
+        //判断所需条件是否满足
+        foreach (KeyValuePair<string, string> rc in eventData.requestConditions)
+        {
+            if (!eventMgr.OnEventTrigger<string, bool>(rc.Key, rc.Value))
+            {
+                return false;
+            }
+        }
+
+        var eventArgs = StoryEventArgs.Create(eventData.triggerEventArgs, () =>
+        {
+            //执行事件完成之后的回调函数
+            eventMgr.OnEventTrigger(eventData.onEventEndCallbackName, eventData.eventEndArgs);
+        });
+
+        eventMgr.OnEventTrigger(eventName: eventData.triggerEventName, eventArgs);
+
+        return true;
+    }
 }

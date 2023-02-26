@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MovementController : ComponentBase
 {
@@ -48,9 +49,9 @@ public class MovementController : ComponentBase
 
     public bool IsOnSlope => isOnSlope;
 
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
+        base.Init(obj, userData);
         rig = GetComponent<Rigidbody2D>();
     }
 
@@ -68,6 +69,15 @@ public class MovementController : ComponentBase
  
     }
 
+    public virtual void MoveTowards(float xOffset ,UnityAction onCompleted)
+    {
+
+    }
+
+    public virtual void RunTowards(float xOffset, UnityAction onCompleted)
+    {
+
+    }
     /// <summary>
     /// 跳跃
     /// </summary>
@@ -104,6 +114,10 @@ public class MovementController : ComponentBase
         }
     }
 
+    public virtual void Flip(UnityAction onCompleted)
+    {
+
+    }
     /// <summary>
     /// 检测地面，当跳跃触发时，有一段不可检测的时间
     /// </summary>

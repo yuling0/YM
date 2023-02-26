@@ -374,8 +374,8 @@ MonoBehaviour:
     - {fileID: -8230070783098863954}
     - {fileID: 8136252684042690103}
     - {fileID: 7422680266906470278}
-    - {fileID: 5158807149941164739}
     - {fileID: -4336374825295487790}
+    - {fileID: 5158807149941164739}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -820,7 +820,7 @@ MonoBehaviour:
   nodeDescription: "\u8FFD\u51FB"
   parent: {fileID: 5633587802740754451}
   root: {fileID: 0}
-  decorator: {fileID: 3773349933165094189}
+  decoratee: {fileID: 3773349933165094189}
   isObserving: 0
   stopPolicy: 2
   key: Chasing
@@ -1283,7 +1283,7 @@ MonoBehaviour:
   nodeDescription: "\u51FB\u4E2D"
   parent: {fileID: 5633587802740754451}
   root: {fileID: 0}
-  decorator: {fileID: -8571478898613924973}
+  decoratee: {fileID: -8571478898613924973}
   isObserving: 0
   stopPolicy: 2
   key: IsHit
@@ -1871,7 +1871,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 5633587802740754451}
   root: {fileID: 0}
-  decorator: {fileID: 1978099797590852626}
+  decoratee: {fileID: 1978099797590852626}
 --- !u!114 &-3345761399722295586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2557,12 +2557,12 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: -1818814485205157533}
     - {fileID: 7986661317393345681}
-    - {fileID: -5888572152225827836}
+    - {fileID: -6301118329799635818}
     - {fileID: 3834802853136594557}
+    - {fileID: 7452375944374744123}
+    - {fileID: -5888572152225827836}
     - {fileID: -4454170568980664019}
     - {fileID: -635014483421907652}
-    - {fileID: -6301118329799635818}
-    - {fileID: 7452375944374744123}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -3724,7 +3724,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 0}
   root: {fileID: 0}
-  decorator: {fileID: 5633587802740754451}
+  decoratee: {fileID: 5633587802740754451}
 --- !u!114 &3191839009017575645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3882,7 +3882,7 @@ MonoBehaviour:
   nodeDescription: "\u5DE1\u903B"
   parent: {fileID: 0}
   root: {fileID: 0}
-  decorator: {fileID: 0}
+  decoratee: {fileID: 0}
   isObserving: 0
   stopPolicy: 2
   key: Idle
@@ -4213,7 +4213,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: -7923652876954865125}
   root: {fileID: 0}
-  decorator: {fileID: -3314148604126893412}
+  decoratee: {fileID: -3314148604126893412}
 --- !u!114 &3834802853136594557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4613,10 +4613,10 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 5633587802740754451}
     - {fileID: 2129054374869143715}
-    - {fileID: 8136252684042690103}
     - {fileID: 7986661317393345681}
     - {fileID: -7923652876954865125}
     - {fileID: -4601895344139498130}
+    - {fileID: 8136252684042690103}
     - {fileID: -3565039516184555082}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -5357,7 +5357,7 @@ MonoBehaviour:
   nodeDescription: "\u51B2\u523A\u653B\u51FB"
   parent: {fileID: 5633587802740754451}
   root: {fileID: 0}
-  decorator: {fileID: -1818814485205157533}
+  decoratee: {fileID: -1818814485205157533}
   isObserving: 0
   stopPolicy: 2
   key: Sprint
@@ -5561,7 +5561,7 @@ MonoBehaviour:
   nodeDescription: "\u53D7\u4F24"
   parent: {fileID: 5633587802740754451}
   root: {fileID: 0}
-  decorator: {fileID: -8230070783098863954}
+  decoratee: {fileID: -8230070783098863954}
   isObserving: 0
   stopPolicy: 2
   key: Hurt

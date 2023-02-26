@@ -26,6 +26,6 @@ public class TestStrategy : IConditionCheckStrategy
     //需要某个任务到达指定状态
     public bool CheckQuestCondition(string conditionStr)
     {
-        return GameManager.Instance.testBool;
+        return false;
     }
 }

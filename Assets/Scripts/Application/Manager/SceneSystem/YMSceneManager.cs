@@ -14,9 +14,12 @@ public class YMSceneManager : SingletonAutoMono<YMSceneManager>
     StorySystem storySystem;
     EventMgr eventMgr;
     SceneDataContainer SceneDataContainer;
-    SceneSwitchUnitDataContainer sceneSwitchUnitDataContainer;
     SceneLoadDataContainer sceneLoadDataContainer;
+    MonsterLoadDataContainer monsterLoadDataContainer;
+    NPCLoadDataContainer npcLoadDataContainer;
+    StorySceneDataContainer storySceneDataContainer;
     SceneData curSceneData;
+    StorySceneData storySceneData;
     int unitLoadCount = 0;
     int completeCount = 0;
     int tryLoadSceneId;
@@ -24,12 +27,16 @@ public class YMSceneManager : SingletonAutoMono<YMSceneManager>
     string sceneSwitchUnitPath;
     Map curMap;
     Vector3 playerPos;
+    bool playerIsFacingRight;
+    StoryEventArgs storyEventArgs;
     //TODO:设置初始场景
     private YMSceneManager()
     {
         SceneDataContainer = BinaryDataManager.Instance.GetContainer<SceneDataContainer>();
-        sceneSwitchUnitDataContainer = BinaryDataManager.Instance.GetContainer<SceneSwitchUnitDataContainer>();
         sceneLoadDataContainer = BinaryDataManager.Instance.GetContainer<SceneLoadDataContainer>();
+        monsterLoadDataContainer = BinaryDataManager.Instance.GetContainer<MonsterLoadDataContainer>();
+        npcLoadDataContainer = BinaryDataManager.Instance.GetContainer<NPCLoadDataContainer>();
+        storySceneDataContainer = BinaryDataManager.Instance.GetContainer<StorySceneDataContainer>();
         conditionManager = ConditionManager.Instance;
         unitManager = UnitManager.Instance;
         storySystem = StorySystem.Instance;
@@ -39,6 +46,7 @@ public class YMSceneManager : SingletonAutoMono<YMSceneManager>
         sceneSwitchUnitPath = "Prefabs/Unit/Other/SceneSwitchUnit";
         eventMgr.AddEventListener(Consts.E_OnHideSceneComplete, ContinueLoad);
         eventMgr.AddEventListener(Consts.E_OnShowSceneComplete, OnShowSceneComplete);
+        eventMgr.AddEventListener<StoryEventArgs>(Consts.E_LoadStoryScene, LoadStoryScene);
     }
     public void TrySwitchScene(string sceneSwicthData)
     {
@@ -55,10 +63,24 @@ public class YMSceneManager : SingletonAutoMono<YMSceneManager>
         }
         if (!storySystem.CheckEventTriggerOnSceneLoadBefore(curSceneData.sceneId))
         {
-            tryLoadSceneId = curSceneData.sceneId;
+            //tryLoadSceneId = curSceneData.sceneId;
+            UIManager.Instance.HidePanel<GamePanel>();
             UIManager.Instance.Push<CutScenePanel>();
             //LoadSceneAsync(sceneName);
             this.playerPos = playerPos;
+        }
+    }
+    public void LoadStoryScene(StoryEventArgs args)
+    {
+        storyEventArgs = args;
+        storySceneData = storySceneDataContainer.GetStorySceneData(int.Parse(args.stringArgs));
+        curSceneData = SceneDataContainer.GetSceneData(storySceneData.sceneName);
+        playerPos = storySceneData.playerPosition;
+        playerIsFacingRight = storySceneData.playerIsFacingRight;
+        if (!storySystem.CheckEventTriggerOnSceneLoadBefore(curSceneData.sceneId))
+        {
+            UIManager.Instance.HidePanel<GamePanel>();
+            UIManager.Instance.Push<CutScenePanel>();
         }
     }
     private void LoadScene()
@@ -77,67 +99,108 @@ public class YMSceneManager : SingletonAutoMono<YMSceneManager>
                 unitManager.ShowUnit(unit.Key, sceneSwitchUnitPath, unit.Value, curSceneData.sceneSwicthUnitAndSceneMap[unit.Key], (unit) => { OnUnitLoadCompleted(); });
             }
 
+            //加载玩家
             unitLoadCount++;
-            unitManager.ShowUnit(Consts.U_Arche, playerPos, null, (unit) =>
+            unitManager.ShowUnit(Consts.U_Arche, playerPos, ShowPlayerInfoArgs.Create(playerIsFacingRight), (unit) =>
             {
+                GameManager.PlayerCore = unit.UnitLogic as Core;
                 CameraController.Instance.OnInit(InitCameraData.Create(unit.transform, curMap));
                 OnUnitLoadCompleted();
+                GameManager.DisablePlayerControl();
             });
-            int sceneLoadDataId = storySystem.GetSceneLoadDataID(curSceneData.sceneId);
-
-            if (sceneLoadDataId == -1)
+            if (storyEventArgs == null)
             {
-                switch (storySystem.TimeBucket)
+                int sceneLoadDataId = storySystem.GetSceneLoadDataID(curSceneData.sceneId);
+
+                if (sceneLoadDataId == -1)
                 {
-                    case E_TimeBucket.AM:
-                        sceneLoadDataId = curSceneData.amSceneLoadDataID;
-                        break;
-                    case E_TimeBucket.PM:
-                        sceneLoadDataId = curSceneData.pmSceneLoadDataID;
-                        break;
-                    case E_TimeBucket.Night:
-                        sceneLoadDataId = curSceneData.nightSceneLoadDataID;
-                        break;
+                    switch (storySystem.TimeBucket)
+                    {
+                        case E_TimeBucket.AM:
+                            sceneLoadDataId = curSceneData.amSceneLoadDataID;
+                            break;
+                        case E_TimeBucket.PM:
+                            sceneLoadDataId = curSceneData.pmSceneLoadDataID;
+                            break;
+                        case E_TimeBucket.Night:
+                            sceneLoadDataId = curSceneData.nightSceneLoadDataID;
+                            break;
+                    }
+                }
+                LoadSceneData(sceneLoadDataId);
+            }
+            else
+            {
+                unitLoadCount += storySceneData.npcLoadIdList.Count;
+                //加载剧情需要的NPC
+                foreach (var npcId in storySceneData.npcLoadIdList)
+                {
+                    NPCLoadData npcLoadData = npcLoadDataContainer.GetNPCLoadData(npcId);
+                    ShowNPCInfoArgs args = ShowNPCInfoArgs.Create(npcLoadData.isFacingRight);
+                    unitManager.ShowUnit(npcLoadData.unitId, npcLoadData.npcPosition, args, (unit) =>
+                    {
+                        OnUnitLoadCompleted();
+                        ReferencePool.Instance.Release(args);
+                    });
+                }
+                unitLoadCount += storySceneData.monsterLoadIdList.Count;
+                //加载剧情需要的Monster
+                foreach (var monsterId in storySceneData.monsterLoadIdList)
+                {
+                    MonsterLoadData monsterLoadData = monsterLoadDataContainer.GetMonsterLoadData(monsterId);
+                    CreateMonsterInfo createMonsterInfo = CreateMonsterInfo.Create(monsterLoadData.patrolPoints, monsterLoadData.birthPoint);
+                    unitManager.ShowUnit(monsterLoadData.unitId, monsterLoadData.birthPoint, createMonsterInfo, (unit) =>
+                    {
+                        OnUnitLoadCompleted();
+                        ReferencePool.Instance.Release(createMonsterInfo);
+                    });
                 }
             }
-            LoadSceneData(sceneLoadDataId);
+
         });
     }
 
     private void LoadSceneData(int sceneLoadDataID)
     {
         SceneLoadData sceneLoadData = sceneLoadDataContainer.GetSceneLoadData(sceneLoadDataID);
-        List<string> conditionList = sceneLoadData.conditionList;
-        for (int i = 0; i < conditionList.Count; i++)
+        //List<string> conditionList = sceneLoadData.conditionList;
+        //for (int i = 0; i < conditionList.Count; i++)
+        //{
+        //    //if (conditionManager.CheckConditionIsTrue(conditionList[i]))
+        //    //{
+        //    //    unitLoadCount++;
+        //    //    unitManager.ShowUnit(sceneLoadData.conditionUnitList[i], sceneLoadData.conditionUnitPositionList[i], null, (unit) => { OnUnitLoadCompleted(); });
+        //    //}
+        //    string [] conditionStr = conditionList[i].Split('&');
+        //    try
+        //    {
+        //        if (eventMgr.OnEventTrigger<string, bool>(conditionStr[0], conditionStr[0]))
+        //        {
+        //            unitLoadCount++;
+        //            unitManager.ShowUnit(sceneLoadData.conditionUnitList[i], sceneLoadData.conditionUnitPositionList[i], null, (unit) => { OnUnitLoadCompleted(); });
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.Log(e.Message);
+        //    }
+        //}
+        unitLoadCount += sceneLoadData.monsterLoadIdList.Count;
+        for (int i = 0; i < sceneLoadData.monsterLoadIdList.Count; i++)
         {
-            //if (conditionManager.CheckConditionIsTrue(conditionList[i]))
-            //{
-            //    unitLoadCount++;
-            //    unitManager.ShowUnit(sceneLoadData.conditionUnitList[i], sceneLoadData.conditionUnitPositionList[i], null, (unit) => { OnUnitLoadCompleted(); });
-            //}
-            string [] conditionStr = conditionList[i].Split('&');
-            try
+            MonsterLoadData monsterLoadData = monsterLoadDataContainer.GetMonsterLoadData(sceneLoadData.monsterLoadIdList[i]);
+            CreateMonsterInfo createMonsterInfo = CreateMonsterInfo.Create(monsterLoadData.patrolPoints, monsterLoadData.birthPoint);
+            unitManager.ShowUnit(monsterLoadData.unitId, monsterLoadData.birthPoint, createMonsterInfo, (unit) => 
             {
-                if (eventMgr.OnEventTrigger<string, bool>(conditionStr[0], conditionStr[0]))
-                {
-                    unitLoadCount++;
-                    unitManager.ShowUnit(sceneLoadData.conditionUnitList[i], sceneLoadData.conditionUnitPositionList[i], null, (unit) => { OnUnitLoadCompleted(); });
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-            }
-        }
-        unitLoadCount += sceneLoadData.unitIdList.Count;
-        for (int i = 0; i < sceneLoadData.unitIdList.Count; i++)
-        {
-            unitManager.ShowUnit(sceneLoadData.unitIdList[i], sceneLoadData.positionList[i], null, (unit) => { OnUnitLoadCompleted(); });
+                OnUnitLoadCompleted();
+                ReferencePool.Instance.Release(createMonsterInfo);
+            });
         }
     }
 
     private void ContinueLoad()
     {
+        //TODO:可以用对象池
         if (curMap != null)
         {
             Destroy(curMap.gameObject);
@@ -148,6 +211,11 @@ public class YMSceneManager : SingletonAutoMono<YMSceneManager>
     private void OnUnitLoadCompleted()
     {
         completeCount++;
+        if (storyEventArgs != null && storySceneData.isNeedSetCameraPosition)
+        {
+            CameraController.Instance.isFollow = false;
+            CameraController.Instance.transform.position = storySceneData.cameraPosition;
+        }
         if (completeCount == unitLoadCount)
         {
             eventMgr.OnEventTrigger(Consts.E_OnSceneLoaded);   //场景加载完成
@@ -157,7 +225,16 @@ public class YMSceneManager : SingletonAutoMono<YMSceneManager>
 
     private void OnShowSceneComplete()
     {
+        if (storyEventArgs != null)
+        {
+            ReferencePool.Instance.Release(storyEventArgs);
+            storyEventArgs = null;
+        }
         Debug.Log($"检查场景:{curSceneData.sceneName}切换后是否有事件触发");
-        storySystem.CheckEventTriggerOnSceneLoadComplete(curSceneData.sceneId);
+        if (!storySystem.CheckEventTriggerOnSceneLoadComplete(curSceneData.sceneId))
+        {
+            UIManager.Instance.Push<GamePanel>();
+            GameManager.EnablePlayerControl();
+        }
     }
 }

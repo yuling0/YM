@@ -25,6 +25,10 @@ public class UIManager : SingletonBase<UIManager>
 
     public void Push<T>(UnityAction<T> callback = null) where T :BasePanel
     {
+        if (_panelStack.Count > 0 && _panelStack.First.Value is T)
+        {
+            return;
+        }
         if (_panelStack.Count > 0)
         {
             _panelStack.First.Value.OnCover();
@@ -90,6 +94,30 @@ public class UIManager : SingletonBase<UIManager>
         }
         return null;
     }
+    public void HidePanel<T>(UnityAction callback = null) where T : BasePanel
+    {
+        T panel = GetPanel<T>();
+        if (panel != null)
+        {
+            LinkedListNode<BasePanel> node = _panelStack.Find(panel);
+            if (_panelStack.First == node) 
+            {
+                _panelStack.RemoveFirst();
+                _panelDic.Remove(panel.GetType().Name);
+                panel.OnHide();
+                if (_panelStack.Count > 0)
+                {
+                    _panelStack.First.Value.OnReveal();
+                }
+            }
+            else
+            {
+                _panelStack.Remove(node);
+            }
+            callback?.Invoke();
+        }
+    }
+
     public void ShowDialog(Vector2 screenPoint, DialogNode node)
     {
         Push<DialogPanel>((panel) =>

@@ -18,9 +18,9 @@ namespace YMFramework.BehaviorTree
         protected Dictionary<string, Delegate> functionDic;   //行为树某些节点需要绑定的方法（例如Condition节点需要执行的方法）
         protected Blackboard blackboard;    //该行为树的黑板
         protected GlobalClock clock;    //全局时钟，用于计时通知
-        public sealed override void Init(Core core)
+        public sealed override void Init(Core core, object userData)
         {
-            base.Init(core);
+            base.Init(core,userData);
 
             functionDic = new Dictionary<string, Delegate>();
             InitTree();

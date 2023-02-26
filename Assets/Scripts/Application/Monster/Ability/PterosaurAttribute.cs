@@ -23,7 +23,7 @@ public class PterosaurAttribute : CharacterAttibute
         {
             //损伤部位是弱点
             //设置击退值
-            movementController.SetVelocityX(args.RepelVelocity, false);
+            movementController.SetVelocityX(args.KnockbackValue, false);
             float targetHp = CurHP > args.DamageValue ? CurHP - args.DamageValue : 0;
             aiController.SetHert();
             //通知面板更新血量

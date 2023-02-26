@@ -15,7 +15,7 @@ public class SceneData
 	/// </summary>
 	public Dictionary<int,Vector3> sceneSwitchUnitAndPositionsMap;
 	/// <summary>
-	///上午场景默认的加载数据的id
+	///上午场景默认的加载数据的id（对应SceneLoadData表中的id）
 	/// </summary>
 	public int amSceneLoadDataID;
 	/// <summary>
@@ -23,11 +23,11 @@ public class SceneData
 	/// </summary>
 	public Dictionary<int,string> sceneSwicthUnitAndSceneMap;
 	/// <summary>
-	///下午场景默认的加载数据的id
+	///下午场景默认的加载数据的id（对应SceneLoadData表中的id）
 	/// </summary>
 	public int pmSceneLoadDataID;
 	/// <summary>
-	///晚上场景默认的加载数据的id
+	///晚上场景默认的加载数据的id（对应SceneLoadData表中的id）
 	/// </summary>
 	public int nightSceneLoadDataID;
 }

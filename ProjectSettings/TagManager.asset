@@ -41,17 +41,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 1577191829
-    locked: 0
   - name: InteriorDecoration
     uniqueID: 3214070825
+    locked: 0
+  - name: Background
+    uniqueID: 1577191829
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Ground
-    uniqueID: 2086837305
+  - name: MiddleDecoration
+    uniqueID: 3970530587
     locked: 0
   - name: OuterDecoration
     uniqueID: 1621591583
@@ -62,9 +62,12 @@ TagManager:
   - name: Character
     uniqueID: 1002349401
     locked: 0
+  - name: TheMostOuterDecoration
+    uniqueID: 3876983537
+    locked: 0
   - name: Effects
     uniqueID: 1766284259
     locked: 0
-  - name: OuterMost
-    uniqueID: 3876983537
+  - name: Ground
+    uniqueID: 2086837305
     locked: 0

@@ -13,7 +13,6 @@ public class BinaryDataManager : SingletonBase<BinaryDataManager>
 
     private BinaryDataManager()
     {
-        Init();
     }
     public void Init()
     {
@@ -23,9 +22,12 @@ public class BinaryDataManager : SingletonBase<BinaryDataManager>
         LoadContainer<ChapterData, ChapterDataContainer>();
         LoadContainer<StoryConditionData, StoryConditionDataContainer>();
         LoadContainer<SceneData, SceneDataContainer>();
-        LoadContainer<SceneSwitchUnitData, SceneSwitchUnitDataContainer>();
         LoadContainer<SceneLoadData, SceneLoadDataContainer>();
         LoadContainer<StoryEventData, StoryEventDataContainer>();
+        LoadContainer<MonsterLoadData, MonsterLoadDataContainer>();
+        LoadContainer<PlayerSkillData, PlayerSkillDataContainer>();
+        LoadContainer<NPCLoadData, NPCLoadDataContainer>();
+        LoadContainer<StorySceneData, StorySceneDataContainer>();
     }
     
     /// <summary>
@@ -90,7 +92,7 @@ public class BinaryDataManager : SingletonBase<BinaryDataManager>
             T obj = Activator.CreateInstance<T>();
             for (int j = 0; j < fields.Length; j++)
             {
-                if(fields[j].FieldType == typeof(int) || typeof(Enum).IsAssignableFrom(fields[j].FieldType))
+                if(fields[j].FieldType == typeof(int))
                 {
                     int val = BitConverter.ToInt32(bs, index);
                     index += 4;
@@ -111,7 +113,6 @@ public class BinaryDataManager : SingletonBase<BinaryDataManager>
                     string str = Encoding.UTF8.GetString(bs, index, len);
                     fields[j].SetValue(obj, str);
                     index += len;
-
                 }
                 else if (fields[j].FieldType == typeof(bool))
                 {
@@ -119,21 +120,24 @@ public class BinaryDataManager : SingletonBase<BinaryDataManager>
                     index += 1;
                     fields[j].SetValue(obj, val);
                 }
-                //else if(fields[j].FieldType == typeof(List<Vector3>))
-                //{
-                //    List<Vector3> list = new List<Vector3>();
-                //    int len = BitConverter.ToInt32(bs, index);
-                //    index += 4;
-                //    string s = Encoding.UTF8.GetString(bs, index, len);
-                //    index+= len;
-                //    string[] strs = s.Split('\n');
-                //    foreach (var item in strs)
-                //    {
-                //        string[] vec = item.Split(',');
-                //        list.Add(new Vector3(float.Parse(vec[0]), float.Parse(vec[1]), float.Parse(vec[2])));
-                //    }
-                //    fields[j].SetValue(obj,list);
-                //}
+                else if(fields[j].FieldType == typeof(Vector3))
+                {
+                    int len = BitConverter.ToInt32(bs, index);
+                    index += 4;
+                    string str = Encoding.UTF8.GetString(bs, index, len);
+                    string[] splits = str.Split(',');
+                    Vector3 vec3 = new Vector3(float.Parse(splits[0]), float.Parse(splits[1]), float.Parse(splits[2]));
+                    fields[j].SetValue(obj, vec3);
+                    index += len;
+                }
+                else if (typeof(Enum).IsAssignableFrom(fields[j].FieldType))
+                {
+                    int len = BitConverter.ToInt32(bs, index);
+                    index += 4;
+                    string str = Encoding.UTF8.GetString(bs, index, len);
+                    fields[j].SetValue(obj, Enum.Parse(fields[j].FieldType, str));
+                    index += len;
+                }
                 else if(fields[j].FieldType.IsGenericType && fields[j].FieldType.GetGenericTypeDefinition() == typeof(List<>))
                 {
                     object list = Activator.CreateInstance(fields[j].FieldType);
@@ -143,21 +147,23 @@ public class BinaryDataManager : SingletonBase<BinaryDataManager>
                     index += 4;
                     string s = Encoding.UTF8.GetString(bs, index, len);
                     index += len;
-                    string[] strs = s.Split('\n');
-                    foreach (var item in strs)
+                    if (s != "null" && s != string.Empty)
                     {
-                        if (genericParameters[0] == typeof(Vector3))
+                        string[] strs = s.Split('\n');
+                        foreach (var item in strs)
                         {
-                            string[] vec = item.Split(',');
-                            add.Invoke(list, new object[] { new Vector3(float.Parse(vec[0]), float.Parse(vec[1]), float.Parse(vec[2])) });
-                        }
-                        else
-                        {
-                            add.Invoke(list, new object[] { Convert.ChangeType(item, genericParameters[0]) });
+                            if (genericParameters[0] == typeof(Vector3))
+                            {
+                                string[] vec = item.Split(',');
+                                add.Invoke(list, new object[] { new Vector3(float.Parse(vec[0]), float.Parse(vec[1]), float.Parse(vec[2])) });
+                            }
+                            else
+                            {
+                                add.Invoke(list, new object[] { Convert.ChangeType(item, genericParameters[0]) });
+                            }
                         }
                     }
                     fields[j].SetValue(obj, list);
-
                 }
                 else if (fields[j].FieldType.IsGenericType && fields[j].FieldType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                 {
@@ -201,6 +207,7 @@ public class BinaryDataManager : SingletonBase<BinaryDataManager>
                     }
                     fields[j].SetValue(obj, dic);
                 }
+
             }
             for (int j = 0; j < keyCount; j++)
             {

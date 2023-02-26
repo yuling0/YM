@@ -15,6 +15,11 @@ public class KeyValueInfo : KeyInfo
 
     public override void OnUpdate()
     {
-        keyValue = Input.GetKey(_keyCode) ? Mathf.Clamp(keyValue + valueOffset, minValue, maxValue) : minValue;
+        //keyValue = Input.GetKey(_keyCode) ? Mathf.Clamp(keyValue + valueOffset, minValue, maxValue) : minValue;
+    }
+
+    public override void Disable()
+    {
+        
     }
 }

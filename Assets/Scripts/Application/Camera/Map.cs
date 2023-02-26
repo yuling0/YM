@@ -9,12 +9,14 @@ public class Map : MonoBehaviour
     public Vector3 offset;
     public Vector4 range;
 
+#if UNITY_EDITOR
     void Update()
     {
         DrawUtility.DrawRectangle(transform.position + offset, size, Color.green);
         range = GetLimitRange();
     }
 
+#endif
     public Vector4 GetLimitRange()
     {
         Vector4 vec = new Vector4();

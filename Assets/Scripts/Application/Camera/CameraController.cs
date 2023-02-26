@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
 
     public Vector4 deathRange;
     public Vector4 curRange;
-
+    public bool isFollow;
     public static CameraController Instance => instance;
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
         instance = this;
         _curCamera = GetComponent<Camera>();
     }
-    public  void OnInit(object userData)
+    public void OnInit(object userData)
     {
         InitCameraData data = userData as InitCameraData;
         if (data == null)
@@ -61,6 +61,7 @@ public class CameraController : MonoBehaviour
             _targetPos.y = edge.z;
         }
         transform.position = _targetPos;
+        isFollow = true;
     }
 #if UNITY_EDITOR
     private void Start()
@@ -76,7 +77,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (_FollowObj == null) return;
+        if (_FollowObj == null || !isFollow) return;
         //TODO:分辨率改变，可能会改变摄像机宽高比，需要重新计算限制范围
         edge.x = limitRange.x + _curCamera.aspect * _curCamera.orthographicSize;  //摄像机坐标能到达的地图左边界（往下以此类推）
         edge.y = limitRange.y - _curCamera.aspect * _curCamera.orthographicSize;

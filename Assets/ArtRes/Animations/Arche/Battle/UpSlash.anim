@@ -7,7 +7,7 @@ AnimationClip:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: UpSlash
-  serializedVersion: 7
+  serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
   m_UseHighQualityCurve: 1
@@ -204,6 +204,8 @@ AnimationClip:
       value: {fileID: 7419034629132949591, guid: 7cc29e9cb6c862742a59743ad2ba6e97, type: 3}
     - time: 0.41666666
       value: {fileID: -779424370354057062, guid: 7cc29e9cb6c862742a59743ad2ba6e97, type: 3}
+    - time: 0.5
+      value: {fileID: -779424370354057062, guid: 7cc29e9cb6c862742a59743ad2ba6e97, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -285,12 +287,13 @@ AnimationClip:
     - {fileID: -7297086468460807953, guid: 7cc29e9cb6c862742a59743ad2ba6e97, type: 3}
     - {fileID: 7419034629132949591, guid: 7cc29e9cb6c862742a59743ad2ba6e97, type: 3}
     - {fileID: -779424370354057062, guid: 7cc29e9cb6c862742a59743ad2ba6e97, type: 3}
+    - {fileID: -779424370354057062, guid: 7cc29e9cb6c862742a59743ad2ba6e97, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.43333334
+    m_StopTime: 0.51666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -789,5 +792,5 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 2
     messageOptions: 0

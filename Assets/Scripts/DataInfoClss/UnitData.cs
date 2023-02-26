@@ -15,9 +15,9 @@ public class UnitData
 	/// </summary>
 	public string resourcePath;
 	/// <summary>
-	///单位阵营（0：玩家、1：敌人、2：NPC）
+	///单位类型（0：玩家、1：敌人、2：NPC 、3 : 其他）
 	/// </summary>
-	public E_UnitCamp unitCamp;
+	public E_UnitType unitCamp;
 	/// <summary>
 	///在场景是否是唯一的（不是唯一的，生成unit时，不会使用这里id字段）
 	/// </summary>

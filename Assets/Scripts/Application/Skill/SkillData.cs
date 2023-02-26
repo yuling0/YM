@@ -9,6 +9,13 @@ public class SkillData : ScriptableObject
     [TableList(NumberOfItemsPerPage = 7,ShowPaging = true)]
     public List<SkillItem> skillItemList = new List<SkillItem>();
 
+    public void Disable()
+    {
+        foreach (var skill in skillItemList)
+        {
+            skill.Disable();
+        }
+    }
     public bool CheckSkillIsCompelted(string skillName)
     {
         var item = GetSkillItem(skillName);

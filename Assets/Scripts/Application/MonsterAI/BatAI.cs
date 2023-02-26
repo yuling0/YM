@@ -9,7 +9,7 @@ public class BatAI : MonsterAI
     SoundHandler soundHandler;
     BatInfo batInfo;
     HitHandler hitHandler;
-    Collider2D[] hitCollider;
+    RaycastHit2D[] raycastHits;
 
     protected override void InitTree()
     {
@@ -17,7 +17,7 @@ public class BatAI : MonsterAI
         soundHandler = GetComponentInCore<SoundHandler>();
         hitHandler = GetComponentInCore<HitHandler>();
         batInfo = info as BatInfo;
-        hitCollider = new Collider2D[1];
+        raycastHits = new RaycastHit2D[3];
     }
     protected override void InitFunctionMap()
     {
@@ -25,6 +25,10 @@ public class BatAI : MonsterAI
         functionDic.Add("SprintAttack", (System.Action)SprintAttack);
         functionDic.Add("SprintEnter", (System.Action)SprintEnter);
         functionDic.Add("Hurt", (System.Action)Hurt);
+    }
+    private void OnValueChanged(E_ChangeType arg1, ISharedType arg2)
+    {
+        GlobalClock.Instance.RemoveTimer(PlayBatFlySound);
     }
     public override void OnEnableComponent()
     {
@@ -35,16 +39,9 @@ public class BatAI : MonsterAI
         blackboard.AddObserver("Sprint", OnValueChanged);
         blackboard.AddObserver("Hurt", OnValueChanged);
     }
-
-    private void OnValueChanged(E_ChangeType arg1, ISharedType arg2)
-    {
-        GlobalClock.Instance.RemoveTimer(PlayBatFlySound);
-    }
-
     public override void OnDisableComponent()
     {
         base.OnDisableComponent();
-
         //在冲刺状态和受伤状态不播放蝙蝠飞行音效
         GlobalClock.Instance.RemoveTimer(PlayBatFlySound);
         blackboard.RemoveObserver("Sprint", OnValueChanged);
@@ -57,10 +54,18 @@ public class BatAI : MonsterAI
         
         if (isContinuousAttacking)
         {
-            if (hitHandler.DetectAttackHit(hitCollider,info.targetMask))
+            if (hitHandler.DetectAttackHit(raycastHits, info.targetMask,out int hitCount))
             {
-                EventMgr.Instance.OnMultiParameterEventTrigger(PlayerBeHitEventArgs.Create(0, movementController.IsFacingRight ? 1.5f : -1.5f));
-                blackboard.SetTrigger("IsHit");
+                for (int i = 0; i < hitCount; i++)
+                {
+                    GameObject hitGameObject = raycastHits[i].transform.gameObject;
+                    if(hitGameObject.CompareTag("Player"))
+                    {
+                        EventMgr.Instance.OnMultiParameterEventTrigger(PlayerBeHitEventArgs.Create(0, movementController.IsFacingRight ? 1.5f : -1.5f));
+                        blackboard.SetTrigger("IsHit");
+                    }
+                }
+
             }
         }
     }

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerMovementController : MovementController
 {
     private ArcheInfo info;                          //尔茄的信息
     private InputHandler input;
+    private AnimationController animationController;
     public PhysicsMaterial2D friction;
     public PhysicsMaterial2D smooth;
     private LayerMask oneWayPlatformLayerMask;
@@ -28,15 +30,31 @@ public class PlayerMovementController : MovementController
     [SerializeField]
     private float movement;             //平面运动时的力
     [SerializeField]
-    public float radius = 0.1f;                //
-
+    private float radius = 0.1f;                //
+    [SerializeField]
+    private float g;    //重力加速度
     private bool isRightJump;
-    public override void Init(Core obj)
+
+    private Coroutine runTowardsCoroutine;
+    private Coroutine FlipCoroutine;
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
+        base.Init(obj, userData);
         info = obj.info as ArcheInfo;
         input = _core.GetComponentInCore<InputHandler>();
+        animationController = _core.GetComponentInCore<AnimationController>();
         oneWayPlatformLayerMask = LayerMask.NameToLayer("OneWayPlatform");
+    }
+    public override void OnShowUnit(object userData)
+    {
+        ShowPlayerInfoArgs args = userData as ShowPlayerInfoArgs;
+        if (args != null)
+        {
+            if (isFacingRight != args.IsFacingRight)
+            {
+                Flip();
+            }
+        }
     }
     public override void OnUpdateComponent()
     {
@@ -61,9 +79,11 @@ public class PlayerMovementController : MovementController
             groundMask |= (1 << oneWayPlatformLayerMask);
             gameObject.layer = LayerMask.NameToLayer("Player");
         }
+
     }
     public override void OnFixedUpdateComponent()
     {
+        //SimulatedGravity();
         Friction();
     }
 
@@ -240,7 +260,89 @@ public class PlayerMovementController : MovementController
         isRightJump = IsFacingRight;
         OptimizeJump();
     }
+    public override void RunTowards(float xOffset, UnityAction onCompleted)
+    {
+        float xDestination = this.transform.position.x + xOffset;
+        animationController.PlayAnim(Consts.A_Run);
+        if (runTowardsCoroutine != null)
+        {
+            StopCoroutine(runTowardsCoroutine);
+        }
+        runTowardsCoroutine = StartCoroutine(InternalRunTowards(xDestination, onCompleted));
+    }
+    private IEnumerator InternalRunTowards(float xDestination, UnityAction onCompleted)
+    {
+        while (isFacingRight && (transform.position.x < xDestination)
+            || !isFacingRight && (transform.position.x > xDestination))
+        {
+            if (Mathf.Abs(xDestination - transform.position.x) > 0.1f)
+            {
+                if (isOnSlope)
+                {
+                    tempVelocity = (IsFacingRight ? 1 : -1) * info.runSpeed * -slopeDir.normalized;
+                }
+                else
+                {
+                    tempVelocity.x = (IsFacingRight ? 1 : -1) * info.runSpeed;
+                }
+            }
+            else
+            {
+                if (isOnSlope)
+                {
+                    float vel = Velocity.magnitude;
+                    tempVelocity = (IsFacingRight ? 1 : -1) * vel * -slopeDir.normalized;
+                }
+            }
+            SetVelocity(tempVelocity);
+            yield return null;
+        }
+        yield return null;
+        while (Mathf.Abs(rig.velocity.x) > 0.1f)
+        {
+            if (isOnSlope)
+            {
+                float vel = Velocity.magnitude;
+                tempVelocity = (IsFacingRight ? 1 : -1) * vel * -slopeDir.normalized;
+            }
+            if (Velocity.magnitude < info.runSpeed)
+            {
+                animationController.PlayAnim(Consts.A_Walk);
+            }
+            float amount = Mathf.Min(Mathf.Abs(rig.velocity.x), frictionAmount);
+            amount *= Mathf.Sign(rig.velocity.x);
+            rig.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+            Debug.Log("减速");
+            yield return null;
+        }
+        SetVelocityZore();
+        animationController.PlayAnim(Consts.A_Idle);
+        onCompleted?.Invoke();
+    }
 
+    public override void Flip(UnityAction onCompleted)
+    {
+        if (isFacingRight)
+            animationController.PlayAnim(Consts.A_TurnLeft);
+        else
+            animationController.PlayAnim(Consts.A_TurnRight);
+        Flip();
+        if (FlipCoroutine != null)
+        {
+            StopCoroutine(FlipCoroutine);
+        }
+        FlipCoroutine = StartCoroutine(InternalFlip(onCompleted));
+    }
+
+    public IEnumerator InternalFlip(UnityAction onCompleted)
+    {
+        while (animationController.CurAnimNormalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+        animationController.PlayAnim(Consts.A_Idle);
+        onCompleted?.Invoke();
+    }
     public void MovementOfSkillInTheAir()
     {
         if (isRightJump && input.h > 0 || !isRightJump && input.h < 0)
@@ -318,6 +420,12 @@ public class PlayerMovementController : MovementController
             rig.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
         }
     }
+    public void AddAirFriction(float friction)
+    {
+        float amount = Mathf.Min(Mathf.Abs(rig.velocity.x), friction);
+        amount *= Mathf.Sign(rig.velocity.x);
+        rig.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+    }
     /// <summary>
     /// 检测地面，当跳跃触发时，有一段不可检测的时间
     /// </summary>
@@ -341,9 +449,17 @@ public class PlayerMovementController : MovementController
             }
         }
         //DrawUtility.DrawCircle(groundCheck, radius, Color.green);
-        DrawUtility.DrawRectangle(groundCheckTF, boxSize, Color.green);
+        DrawUtility.DrawRectangle(groundCheckTF, new Vector2(boxSize.x /2 , boxSize.y /2), Color.green);
     }
-
+    //private void SimulatedGravity()
+    //{
+    //    if (!IsGrounded)
+    //    {
+    //        tempVelocity = rig.velocity;
+    //        tempVelocity.y += g * Time.deltaTime;
+    //        rig.velocity = tempVelocity;
+    //    }
+    //}
     public void SetFriction()
     {
         rig.sharedMaterial = friction;

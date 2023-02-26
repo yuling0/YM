@@ -42,20 +42,20 @@ public class MonsterFSM : BaseFSM
 
     }
 
-    public override void OnceAttackTrigger()
+    public override void OnceAttackTrigger(int id)
     {
-        (currentState as MonsterAttackState)?.OnceAttackTrigger();
+        (currentState as MonsterAttackState)?.OnceAttackTrigger(id);
         Debug.Log("OnceAttackTrigger");
     }
 
-    public override void ContinuousAttackEnter()
+    public override void ContinuousAttackEnter(int id)
     {
-        (currentState as MonsterAttackState)?.ContinuousAttackEnter();
+        (currentState as MonsterAttackState)?.ContinuousAttackEnter(id);
     }
 
-    public override void ContinuousAttackExit()
+    public override void ContinuousAttackExit(int id)
     {
-        (currentState as MonsterAttackState)?.ContinuousAttackExit();
+        (currentState as MonsterAttackState)?.ContinuousAttackExit(id);
     }
 
 }

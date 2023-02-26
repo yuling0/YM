@@ -34,25 +34,36 @@ public class MonsterAttribute : CharacterAttibute
         {
             //_monsterFSM.ChangeState(Consts.S_HurtState);
 
-            _monsterMovementController.SetVelocityX(args.RepelVelocity,false);
+            _monsterMovementController.SetVelocityX(args.KnockbackValue,false);
+            _monsterMovementController.SetVelocityY(args.KnockupValue);
 
-            PoolMgr.Instance.PopObj<GameObject>(Consts.P_Hit).transform.position = transform.position + Vector3.up * effectOffset;
-
+            //PoolMgr.Instance.PopObj<GameObject>(Consts.P_Hit).transform.position = args.HitPoint;
+            UnitManager.Instance.ShowUnit("HitEffect", args.HitPoint, null, (unit) => { unit.transform.localScale = new Vector3(Mathf.Sign(args.KnockbackValue), 1, 1); });
             int targetHp = CurHP >= args.DamageValue ? CurHP - args.DamageValue : 0;
 
             monsterAI.SetHert();
 
             isHert = true;
 
-            EventMgr.Instance.OnMultiParameterEventTrigger<UpdateMonsterUIInfoArgs>(UpdateMonsterUIInfoArgs.Create(this, targetHp));
-
+            EventMgr.Instance.OnMultiParameterEventTrigger(UpdateMonsterUIInfoArgs.Create(this, targetHp));
+            EventMgr.Instance.OnMultiParameterEventTrigger(DamageTextEventArgs.Create(args.DamageValue, args.HitPoint));
             _curHP = targetHp;
 
+            if (_curHP <= 0)
+            {
+                Death(args.HitPoint);
+            }
         }
     }
 
-    protected void Death()
+    protected void Death(Vector2 hitPoint)
     {
+        UnitManager.Instance.HideUnit(ID, null);
+        UnitManager.Instance.ShowUnit("ExplosionEffect", hitPoint, null);
+    }
 
+    public override void OnHideUnit(object userData)
+    {
+        EventMgr.Instance.RemoveMultiParameterEventListener<MonsterBeHitEventArgs>(Hert);
     }
 }

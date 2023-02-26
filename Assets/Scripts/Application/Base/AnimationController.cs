@@ -22,11 +22,15 @@ public class AnimationController : ComponentBase
         }
     }
 
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
+        base.Init(obj, userData);
         soundHandler = GetComponentInCore<SoundHandler>();
         anim = GetComponent<Animator>();
+    }
+    public override void OnShowUnit(object userData)
+    {
+        curAnim = null;
     }
     /// <summary>
     /// 播放动画

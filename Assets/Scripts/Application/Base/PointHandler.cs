@@ -6,31 +6,37 @@ using UnityEngine;
 /// </summary>
 public class PointHandler : ComponentBase
 {
-    private Transform bornPoint;
-    private List<Transform> patrolPoints;
+    private Vector3 birthPoint;
+    private List<Vector3> patrolPoints;
     private int curIndex;
 
-    public Vector3 GetBornPoint => bornPoint.position;
+    public Vector3 GetBirthPoint => birthPoint;
 
-    public Transform GetCurrentPatrolPoint
+    public Vector3 GetCurrentPatrolPoint
     {
         get
         {
             if (patrolPoints.Count == 0)
             {
-                return null;
+                return birthPoint;
             }
             return patrolPoints[curIndex = (curIndex + 1) % patrolPoints.Count ];
         }
     }
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
-        patrolPoints = new List<Transform>();
-        bornPoint = transform.Find("BornPoint");
-        foreach (var t in transform)
+        base.Init(obj,userData);
+        //patrolPoints = new List<Transform>();
+        //bornPoint = transform.Find("BornPoint");
+        //foreach (var t in transform)
+        //{
+        //    if (t as Transform != bornPoint) patrolPoints.Add(t as Transform);
+        //}
+        CreateMonsterInfo  createMonsterInfo = userData as CreateMonsterInfo;
+        if (createMonsterInfo != null)
         {
-            if (t as Transform != bornPoint) patrolPoints.Add(t as Transform);
+            patrolPoints = createMonsterInfo.patrolPoints;
+            birthPoint = createMonsterInfo.birthPoint;
         }
     }
 

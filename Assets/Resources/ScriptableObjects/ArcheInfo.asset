@@ -24,7 +24,7 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 6c7a59cedeb51de409eca33a16fdb870, type: 3}
   unitName: Arche
   hp: 100
-  atk: 15
+  atk: 150
   def: 8
   targetMask:
     serializedVersion: 2
@@ -39,6 +39,7 @@ MonoBehaviour:
   runSpeed: 3.5
   airSpeed: 3.5
   jumpForce: 350
+  maxBufferSpeed: 3.5
   KnightThrustVelocity: 4
   LeapingSlashVelocity: {x: 5, y: 2.5, z: 0}
   WideSlashVelocity: 2.5

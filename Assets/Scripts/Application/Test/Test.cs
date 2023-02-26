@@ -45,7 +45,7 @@ public class Test : SerializedMonoBehaviour
     public bool flag;
     Animator anim;
     public (int, string) valueTupleSample;
-
+    public MovementController mc;
     public DialogDataContainer container;
 
     public DialogNodeBase cur;
@@ -263,12 +263,12 @@ public class Test : SerializedMonoBehaviour
         
         timer += Time.deltaTime;
         //ProcessDialog();
-        if (!DialogManager.Instance.IsInDialog && Input.GetKeyDown(KeyCode.V))
+        if (!DialogueManager.Instance.IsInDialog && Input.GetKeyDown(KeyCode.V))
         {
             //DialogManager.Instance.StartDialog(container);
             //GameManager.Instance.testBool = true;
             //UIManager.Instance.Push<CutScenePanel>();
-            CutsceneManager.Instance.Resume();
+            //CutsceneManager.Instance.Resume();
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -277,20 +277,49 @@ public class Test : SerializedMonoBehaviour
             //ResourceMgr.Instance.LoadAsset<GameObject>("Prefabs/Unit/NPC/Arche’s Father");
             //BinaryDataManager.Instance.SaveData(objectTest, "AI/Test.Ling",false);
 
-            objectTest = null;
+            //TimelineAsset timelineAsset = ResourceMgr.Instance.LoadAsset<TimelineAsset>("TimeLine/TestTimeline");
+            //CutsceneManager.Instance.PlayCutscene(timelineAsset);
+            //mc.RunTowards(10, null);
+            //mc.Flip(null);
+            //UIManager.Instance.Push<StoryPanel>();
+            //UnitManager.Instance.ShowUnit(200005, new Vector3(-0.5f, -2.5f, 0), null);
+            //UnitManager.Instance.ShowUnit(100001, new Vector3(-1.8f, -2.5f, 0), null);
+            //UnitManager.Instance.ShowUnit(200004, new Vector3(-3.0f, -2.5f, 0), null);
+            //CutsceneManager.Instance.PlayCutscene(TestTimeline);
+            YMSceneManager.Instance.LoadStoryScene(StoryEventArgs.Create("1", null));
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            //YMSceneManager.Instance.LoadSceneAsync("TestScene", () => { print("场景加载完成"); });
+            //UIManager.Instance.Pop();
+            //ResourceMgr.Instance.LoadAsset<GameObject>("Prefabs/Unit/NPC/Arche’s Father");
+            //BinaryDataManager.Instance.SaveData(objectTest, "AI/Test.Ling",false);
 
-            objectTest = BinaryDataManager.Instance.LoadData<ScriptableObjectTest>("AI/Test.Ling");
-
+            //TimelineAsset timelineAsset = ResourceMgr.Instance.LoadAsset<TimelineAsset>("TimeLine/TestTimeline");
+            //CutsceneManager.Instance.PlayCutscene(timelineAsset);
+            //mc.RunTowards(10, null);
+            //mc.Flip(null);
+            UIManager.Instance.Pop();
+            //UnitManager.Instance.ShowUnit(200005, new Vector3(-0.5f, -2.5f, 0), null);
+            //UnitManager.Instance.ShowUnit(100001, new Vector3(-1.8f, -2.5f, 0), null);
+            //UnitManager.Instance.ShowUnit(200004, new Vector3(-3.0f, -2.5f, 0), null);
+            //CutsceneManager.Instance.PlayCutscene(TestTimeline);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
             // UnitManager.Instance.ShowUnit("XiFeng", new Vector3(-4, -1.7f, 0f));
             // UnitManager.Instance.ShowUnit("Arche", new Vector3(-2.67f, -2.41f, 0f));
-            
+            UIManager.Instance.Push<GamePanel>();
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            // UnitManager.Instance.ShowUnit("XiFeng", new Vector3(-4, -1.7f, 0f));
+            // UnitManager.Instance.ShowUnit("Arche", new Vector3(-2.67f, -2.41f, 0f));
+            UIManager.Instance.HidePanel<GamePanel>();
         }
         if (Input.GetMouseButtonDown(0))
         {
-            EventMgr.Instance.OnMultiParameterEventTrigger<DamageTextEventArgs>(DamageTextEventArgs.Create(UnityEngine.Random.Range(1, 101), Input.mousePosition));
+            EventMgr.Instance.OnMultiParameterEventTrigger<DamageTextEventArgs>(DamageTextEventArgs.Create(UnityEngine.Random.Range(1, 101), Camera.main.ScreenToWorldPoint(Input.mousePosition)));
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -302,13 +331,13 @@ public class Test : SerializedMonoBehaviour
         {
             //UIManager.Instance.Push<GamePanel>();
             //UnitManager.Instance.Release();
-            YMSceneManager.Instance.TrySwitchScene("1001-4001");
+            YMSceneManager.Instance.TrySwitchScene("1009-1");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //UIManager.Instance.Pop();
-            YMSceneManager.Instance.TrySwitchScene("1002-4008");
+            YMSceneManager.Instance.TrySwitchScene("1002-1");
         }
 
         if (Input.GetKeyDown(KeyCode.M))
@@ -329,7 +358,7 @@ public class Test : SerializedMonoBehaviour
     {
         if (canContinue && Input.GetKeyDown(KeyCode.V))
         {
-            Vector2 pos = Camera.main.WorldToScreenPoint(GameManager.Instance.PlayerTF.position + Vector3.up * 1.5f);
+            Vector2 pos = Camera.main.WorldToScreenPoint(GameManager.PlayerTF.position + Vector3.up * 1.5f);
             GameObject obj = new GameObject();
             obj.transform.position = pos;
             if (cur is DialogNode)

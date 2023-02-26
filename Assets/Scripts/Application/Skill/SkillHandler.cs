@@ -6,13 +6,21 @@ public class SkillHandler : ComponentBase
 {
     public SkillData skillData;
 
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
+        base.Init(obj,userData);
         //后续要动态加载SkillData
         skillData = Resources.Load<SkillData>("ScriptableObjects/SkillData");
     }
+    public override void OnDisableComponent()
+    {
+        skillData.Disable();
+    }
 
+    public override void OnHideUnit(object userData)
+    {
+        skillData.Disable();
+    }
     /// <summary>
     /// 根据名称查找技能是否完成
     /// </summary>

@@ -25,7 +25,6 @@ public class Ghosting : UnitLogic
         Transform targetTF = targetRenderer.transform;
         thisRenderer.sprite = targetRenderer.sprite;
         thisRenderer.color = color;
-        transform.position = targetTF.position;
         transform.localScale= targetTF.lossyScale;
         Invoke("PushPool", duration);
 

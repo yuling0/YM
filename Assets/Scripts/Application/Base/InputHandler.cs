@@ -10,6 +10,7 @@ public class InputHandler : ComponentBase
     private MovementController _mc;
     private InputMgr inputMgr;
     public float h;
+    [SerializeField]
     //输出相关
     public bool isLeftRunning;          //是否跑步
     public bool isRightRunning;          //是否跑步
@@ -52,21 +53,43 @@ public class InputHandler : ComponentBase
     public bool isRightThrust;  //右突刺    （右 + 攻击键）
 
     public float axisSensitivity;
-
-
     public float AbsH => Mathf.Abs(h);
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
+        base.Init(obj,userData);
         _mc = obj.GetComponentInCore<PlayerMovementController>();
         inputMgr = InputMgr.Instance;
     }
+    public override void OnDisableComponent()
+    {
+        isLeftRunning = false;
+        isRightRunning = false;
+        isWalking = false;
+        isCourch = false;
+        isDefend = false;
+        isLeftFlip = false;
+        isRightFlip = false;
+        isCrossPlatform = false;
+        leftDoubleKey = false;
+        rightDoubleKey = false;
+        isLeftPress = false;
+        isRightPress = false;
+        isDrawSwordPress = false;
+        isAttackPress = false;
+        isDownAttack = false;
+        isUpAttack = false;
+        isLeftThrust = false;
+        isRightThrust = false;
+        h = 0;
+    }
 
-
+    public override void OnHideUnit(object userData)
+    {
+        OnDisableComponent();
+    }
     public override void OnUpdateComponent()
     {
         base.OnUpdateComponent();
-
         isLeftRunning = false;
         isRightRunning = false;
         isLeftFlip = false;

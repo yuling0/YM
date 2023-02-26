@@ -6,14 +6,14 @@ public class HitHandler : ComponentBase
 {
     public Vector2 testBox;
     public Transform hitBox;
-    public bool DetectAttackHit(Collider2D[] collider2D , LayerMask mask)
+    public bool DetectAttackHit(RaycastHit2D[] hits , LayerMask mask , out int hitCount)
     {
         //collider2D = Physics2D.OverlapBoxAll(jumpKickCheck.position, testBox, 0f,1<<LayerMask.NameToLayer("Wall") 
         //    | 1<< LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Monster"));
 
-        int count = Physics2D.OverlapBoxNonAlloc(hitBox.position, testBox, 0f, collider2D , mask);
+        hitCount = Physics2D.BoxCastNonAlloc(hitBox.position, testBox, 0f, Vector2.right, hits, 0f, mask);
 
-        return count > 0;
+        return hitCount > 0;
     }
     private void OnDrawGizmos()
     {

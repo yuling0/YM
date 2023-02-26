@@ -31,6 +31,7 @@ public class Unit : MonoBehaviour ,IUnit
 
     public object UnitInstance => unitInstacne;
 
+    public UnitLogic UnitLogic => unitLogic;
     public void OnHide(object userData = null)
     {
         IsVisible = false;

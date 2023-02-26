@@ -15,28 +15,32 @@ public class BufferState : PlayerBaseState
 
         //AddTargetState(() => (_ih.isLeftFlip || _ih.isRightFlip) && Mathf.Abs(_mc.Velocity.x) < 0.01f, Consts.S_FlipState);
         //AddTargetState(() => _mc.Velocity.x > 0 && !_mc.IsFacingRight || _mc.Velocity.x < 0 && _mc.IsFacingRight, Consts.S_FlipState);
-
+        AddTargetState(() => !_mc.IsGrounded, Consts.S_FallEnter);
         AddTargetState(() => _ih.isDefend, Consts.S_Defend);
 
         //AddTargetState(() => !_mc.IsFacingRight && _ih.isLeftPress || _mc.IsFacingRight && _ih.isRightPress, Consts.S_Walk);
         //AddTargetState(() => _ih.AbsH >0, Consts.S_Walk);
 
-        AddTargetState(() => _mc.Velocity.sqrMagnitude < 0.01f, Consts.S_Idle);
+        AddTargetState(() => Mathf.Abs(_mc.Velocity.x) < 0.01f, Consts.S_Idle);
 
     }
     public override void OnEnter()
     {
         base.OnEnter();
         _mc.SetSmooth();
+        if (Mathf.Abs(_mc.Velocity.x) > _erqieInfo.maxBufferSpeed)
+        {
+            _mc.SetVelocityX(_erqieInfo.maxBufferSpeed);
+        }
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
         _mc.OptimizeSlopeMovement();
-        //if (_ih.isLeftPress || _ih.isRightPress)
-        //{
-        //    _mc.AddFriction(0.15f);
-        //}
+        if (_ih.h > 0 && !_mc.IsFacingRight || _ih.h < 0 && _mc.IsFacingRight)
+        {
+            _mc.AddFriction(0.2f);
+        }
     }
 }

@@ -36,6 +36,13 @@ public class SkillItem
     private float intervalTimer;
     public bool OK => ok;
 
+    public void Disable()
+    {
+        ok = false;
+        intervalTimer = 0;
+        delayTimer = 0;
+        resetTimer = 0f;
+    }
     public int CurrentInputDir()
     {
 

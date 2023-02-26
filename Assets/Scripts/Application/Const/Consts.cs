@@ -250,13 +250,14 @@ public static class Consts
     public const string P_SoundAgent = P_Prefabs + "Sound/SoundAgent";
     public const string P_SoundGroup = P_Prefabs + "Sound/SoundGroup";
     public const string P_Ghosting = P_Prefabs + "Player/Ghosting";
-    public const string P_Hit = P_Prefabs + "Effects/Hit";
+    public const string P_Hit = P_Prefabs + "Effects/HitEffect";
     public const string P_UI = P_Prefabs +"UI/";
 
     public const string P_ScriptableObjectsPath = "Assets/Resources/ScriptableObjects";
     public const string P_AI = "Assets/Resources/ScriptableObjects/AI";
     public static readonly string P_AudioClipPath = "Audio";
     public static readonly string P_DialogDataPath = "ScriptableObjects/DialogData";
+    public static readonly string P_CutscenePath = "Cutscene";
     #endregion
 
     #region 音效切片名称
@@ -281,6 +282,9 @@ public static class Consts
     public const string E_OnShowSceneComplete = "OnShowSceneComplete";
     public const string E_TrySwitchScene = "TrySwitchScene";
     public const string E_StartDialog = "StartDialog";
+    public const string E_SwitchScene = "SwitchScene";
+    public const string E_LoadStoryScene = "LoadStoryScene";
+    public const string E_PlayCutscene = "PlayCutscene";
     #endregion
 
     #region 事件触发条件类型字符串
@@ -293,6 +297,8 @@ public static class Consts
     /// 场景加载之前触发
     /// </summary>
     public const string ET_OnSceneLoadBefore = "OnSceneLoadBefore";
+
+    public const string ET_OnCutscenePlayed = "OnCutscenePlayed";
     #endregion
 
     #region 单位名称

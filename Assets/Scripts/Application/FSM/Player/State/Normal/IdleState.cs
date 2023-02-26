@@ -77,7 +77,7 @@ public class IdleState : PlayerBaseState
 
     public override void OnUpdate()
     {
-        _mc.SetVelocityZore();
+        //_mc.SetVelocityZore();
     }
 
     public override void OnExit()

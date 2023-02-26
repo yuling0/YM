@@ -27,4 +27,7 @@ public abstract class KeyInfo
         _keyCode = kc;
     }
     public abstract void OnUpdate();
+
+    public abstract void Disable();
+
 }

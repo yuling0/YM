@@ -12,9 +12,11 @@ public class BaseFSM : ComponentBase, IFSM
 
     protected SpriteRenderer spriteRenderer;
 
-    public sealed override void Init(Core core)
+    public string currentStateStr;
+
+    public sealed override void Init(Core core, object userData)
     {
-        base.Init(core);
+        base.Init(core, userData);
         spriteRenderer = GetComponentInCore<AnimationController>().SpriteRenderer;
         InitFSM();
     }
@@ -33,6 +35,7 @@ public class BaseFSM : ComponentBase, IFSM
         {
             OnExit();
             currentState = stateDic[stateName];
+            currentStateStr = stateName;
             OnEnter();
         }
         else
@@ -91,23 +94,23 @@ public class BaseFSM : ComponentBase, IFSM
         currentState?.AnimationEventTrigger();
     }
 
-    public virtual void OnceAttackTrigger()
+    public virtual void OnceAttackTrigger(int id)
     {
 
     }
-    public virtual void ContinuousAttackEnter()
+    public virtual void ContinuousAttackEnter(int id)
     {
 
     }
 
-    public virtual void ContinuousAttackExit()
+    public virtual void ContinuousAttackExit(int id)
     {
 
     }
 
     public virtual void GenerateGhosting()
     {
-        UnitManager.Instance.ShowUnit(Consts.U_Ghosting, spriteRenderer);
+        UnitManager.Instance.ShowUnit(Consts.U_Ghosting,_core.transform.position, spriteRenderer);
     }
 
 }

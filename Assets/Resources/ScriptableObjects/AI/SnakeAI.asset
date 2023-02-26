@@ -467,7 +467,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 1515036312588480623}
   root: {fileID: 0}
-  decorator: {fileID: -2462308399535196041}
+  decoratee: {fileID: -2462308399535196041}
   isObserving: 0
   stopPolicy: 2
   key: Chase
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 1515036312588480623}
   root: {fileID: 0}
-  decorator: {fileID: 9037692688000063888}
+  decoratee: {fileID: 9037692688000063888}
   isObserving: 0
   stopPolicy: 2
   key: Hurt
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 1515036312588480623}
   root: {fileID: 0}
-  decorator: {fileID: 673538970345480584}
+  decoratee: {fileID: 673538970345480584}
   isObserving: 0
   stopPolicy: 2
   key: Patrol
@@ -1418,8 +1418,8 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: -6721849264753942954}
     - {fileID: -2386597908013214631}
-    - {fileID: -3189994213782319139}
     - {fileID: -1442883705587562095}
+    - {fileID: -3189994213782319139}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -1627,8 +1627,8 @@ MonoBehaviour:
   parent: {fileID: -2386597908013214631}
   root: {fileID: 0}
   children:
-  - {fileID: -3189994213782319139}
   - {fileID: -1442883705587562095}
+  - {fileID: -3189994213782319139}
 --- !u!114 &-6640221787512061136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2724,7 +2724,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: -6721849264753942954}
   root: {fileID: 0}
-  decorator: {fileID: 6002466327314029184}
+  decoratee: {fileID: 6002466327314029184}
   isObserving: 0
   stopPolicy: 0
   checkInterval: 0
@@ -2929,7 +2929,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: -8864491362101275937}
   root: {fileID: 0}
-  decorator: {fileID: -2386597908013214631}
+  decoratee: {fileID: -2386597908013214631}
 --- !u!114 &-2386597908013214631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3542,7 +3542,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 1515036312588480623}
   root: {fileID: 0}
-  decorator: {fileID: -1304875815294999699}
+  decoratee: {fileID: -1304875815294999699}
   isObserving: 0
   stopPolicy: 2
   key: isHit
@@ -4281,7 +4281,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 4780701042549990432}
   root: {fileID: 0}
-  decorator: {fileID: 5532724961453175563}
+  decoratee: {fileID: 5532724961453175563}
 --- !u!114 &-120617974977250003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4809,7 +4809,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: -7350315916255640231}
   root: {fileID: 0}
-  decorator: {fileID: -5632846870902587082}
+  decoratee: {fileID: -5632846870902587082}
 --- !u!114 &894936415731467177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5338,13 +5338,13 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 1515036312588480623}
     - {fileID: 4730838137806474514}
-    - {fileID: 6326289510028348188}
-    - {fileID: -1569969933629133399}
     - {fileID: 2286924178045787134}
     - {fileID: 4780701042549990432}
     - {fileID: -7350315916255640231}
     - {fileID: -8864491362101275937}
     - {fileID: -8139394344783293719}
+    - {fileID: -1569969933629133399}
+    - {fileID: 6326289510028348188}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -5677,13 +5677,13 @@ MonoBehaviour:
   parent: {fileID: 4730838137806474514}
   root: {fileID: 0}
   children:
-  - {fileID: -8139394344783293719}
-  - {fileID: -1569969933629133399}
-  - {fileID: 6326289510028348188}
   - {fileID: 2286924178045787134}
   - {fileID: -8864491362101275937}
   - {fileID: -7350315916255640231}
   - {fileID: 4780701042549990432}
+  - {fileID: -8139394344783293719}
+  - {fileID: -1569969933629133399}
+  - {fileID: 6326289510028348188}
 --- !u!114 &2286924178045787134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5884,7 +5884,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 1515036312588480623}
   root: {fileID: 0}
-  decorator: {fileID: 7396890857457817234}
+  decoratee: {fileID: 7396890857457817234}
   isObserving: 0
   stopPolicy: 2
   key: WideBite
@@ -6191,7 +6191,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 0}
   root: {fileID: 0}
-  decorator: {fileID: 1515036312588480623}
+  decoratee: {fileID: 1515036312588480623}
 --- !u!114 &4780701042549990432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6401,7 +6401,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 1515036312588480623}
   root: {fileID: 0}
-  decorator: {fileID: -952954902545222930}
+  decoratee: {fileID: -952954902545222930}
   isObserving: 0
   stopPolicy: 0
   key: Idle
@@ -6912,7 +6912,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 0}
   root: {fileID: 0}
-  decorator: {fileID: 0}
+  decoratee: {fileID: 0}
   isObserving: 0
   stopPolicy: 2
   checkInterval: 0
@@ -7369,7 +7369,7 @@ MonoBehaviour:
   nodeDescription: 
   parent: {fileID: 1515036312588480623}
   root: {fileID: 0}
-  decorator: {fileID: 6846443036224389801}
+  decoratee: {fileID: 6846443036224389801}
   isObserving: 0
   stopPolicy: 2
   key: Bite
@@ -7902,12 +7902,12 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 7396890857457817234}
     - {fileID: 2286924178045787134}
-    - {fileID: -7306391553609591881}
     - {fileID: -1756100855894536796}
     - {fileID: 6523912727839546234}
     - {fileID: 5395891384703351841}
     - {fileID: -3795502939871962250}
     - {fileID: 6592583479706859750}
+    - {fileID: -7306391553609591881}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -8219,8 +8219,8 @@ MonoBehaviour:
   - {fileID: -3795502939871962250}
   - {fileID: 6592583479706859750}
   - {fileID: 6523912727839546234}
-  - {fileID: -7306391553609591881}
   - {fileID: -1756100855894536796}
+  - {fileID: -7306391553609591881}
 --- !u!114 &9037692688000063888
 MonoBehaviour:
   m_ObjectHideFlags: 0

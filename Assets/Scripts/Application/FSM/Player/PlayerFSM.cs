@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerFSM : BaseFSM
 {
+    public PlayerSkillDataContainer playerSkillDataContainer;
     public bool isCanJumpAttack;
-
     public float skillBufferSpeed;      //某些技能使用后的产生缓冲速度
     public float bufferSpeed;           //行走或冲刺过后缓冲速度（刹车的速度）
     public float ghostingIntervalTime;
@@ -13,6 +13,7 @@ public class PlayerFSM : BaseFSM
     public override void InitFSM()
     {
         base.InitFSM();
+        playerSkillDataContainer = BinaryDataManager.Instance.GetContainer<PlayerSkillDataContainer>();
         stateDic.Add(Consts.S_Idle, new IdleState(this, _core, Consts.A_Idle, Consts.A_BattleIdle));
         stateDic.Add(Consts.S_Walk, new WalkState(this, _core, Consts.A_Walk, Consts.A_BattleWalk));
         stateDic.Add(Consts.S_Run, new RunState(this, _core, Consts.A_Run, Consts.A_BattleRun));
@@ -48,31 +49,24 @@ public class PlayerFSM : BaseFSM
         stateDic.Add(Consts.S_DownStabExitState, new DownStabExitState(this, _core, Consts.A_DownStabExit, Consts.A_DownStabExit));
         stateDic.Add(Consts.S_WheelSlashState, new WheelSlashState(this, _core, Consts.A_WheelSlash, Consts.A_WheelSlash));
         stateDic.Add(Consts.S_HurtState, new HurtState(this, _core, Consts.A_Hurt, Consts.A_BattleHurt));
+    }
+    public override void OnEnableComponent()
+    {
         ChangeState(Consts.S_Idle);
     }
-    public override void OnUpdate()
+    public override void OnceAttackTrigger(int id)
     {
-        base.OnUpdate();
-        //Debug.Log($"{currentState}");
-    }
-    public override void OnDisableComponent()
-    {
-        base.OnDisableComponent();
-        ChangeState(Consts.S_Idle);
-    }
-    public override void OnceAttackTrigger()
-    {
-        (currentState as PlayerAttackState)?.OnceAttackTrigger();
+        (currentState as PlayerAttackState)?.OnceAttackTrigger(id);
     }
 
-    public override void ContinuousAttackEnter()
+    public override void ContinuousAttackEnter(int id)
     {
-        (currentState as PlayerAttackState)?.ContinuousAttackEnter();
+        (currentState as PlayerAttackState)?.ContinuousAttackEnter(id);
     }
 
-    public override void ContinuousAttackExit()
+    public override void ContinuousAttackExit(int id)
     {
-        (currentState as PlayerAttackState)?.ContinuousAttackExit();
+        (currentState as PlayerAttackState)?.ContinuousAttackExit(id);
     }
 
     //TODO:使用Clock计时

@@ -5,11 +5,26 @@ using UnityEngine;
 public class InputMgr : SingletonBase<InputMgr>
 {
     private KeyData keyData;
+
+    private bool enable;
     public InputMgr()
     {
         MonoMgr.Instance.AddUpateAction(OnUpdate);
         //TODO:后续可能添加改键
         keyData = Resources.Load<KeyData>("ScriptableObjects/KeyData"); //加载初始按键
+        enable = true;
+    }
+    public bool Enable
+    {
+        set 
+        {
+            if (!value)
+            {
+                keyData.Disable();
+            }
+            enable = value;
+        }
+        get { return enable; }
     }
     public bool GetDoubleKey(string keyName)
     {
@@ -47,6 +62,7 @@ public class InputMgr : SingletonBase<InputMgr>
     }
     public void OnUpdate()
     {
+        if (!enable) return;
         keyData?.OnUpdate();
     }
 }

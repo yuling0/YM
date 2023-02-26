@@ -22,7 +22,5 @@ public static class StaticTest
     private static void OnInit()
     {
         Debug.Log("Unity¼ÓÔØ¿ªÊ¼");
-
-
     }
 }

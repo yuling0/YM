@@ -6,15 +6,13 @@ using UnityEngine;
 
 public class UIHorizontalMovementElement : UIComponent
 {
-    public float _hOffset;      //水平移动量
-    public float orignX;
+    public float endX;      //水平移动量
+    public float originX;
     public override void OnInit()
     {
         base.OnInit();
-        orignX = _rt.anchoredPosition.x;
-        Debug.Log(_rt.anchoredPosition);
-        _showAnim = _rt.DoAnchorPosX(orignX, showAnimDuration);
-        _hideAnim = _rt.DoAnchorPosX(orignX + _hOffset, hideAnimDuration);
+        _showAnim = _rt.DoAnchorPosX(new Vector2(originX, 0),endX, showAnimDuration);
+        _hideAnim = _rt.DoAnchorPosX(originX, hideAnimDuration);
     }
 
 }

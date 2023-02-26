@@ -2,23 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Effect : MonoBehaviour
+public class Effect : UnitLogic
 {
     public ParticleSystem ps;
-    public string path;
     public float duation;
-    private void Awake()
+
+    public override void OnShow(object userData)
     {
-        duation = ps.main.duration;
-    }
-    private void OnEnable()
-    {
+        base.OnShow(userData);
         ps?.Play();
         Invoke("PushPool", duation);
     }
-
     private void PushPool()
     {
-        PoolMgr.Instance.PushObj<GameObject>(path, this.gameObject);
+        UnitManager.Instance.HideUnit(this.unit,null);
     }
 }

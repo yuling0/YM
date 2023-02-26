@@ -44,7 +44,7 @@ public class DialogPanel : BasePanel
         img_Icon.SetAlpha(0);
         txt_RoleName.text = "";
         txt_Content.text = "";
-        GameManager.Instance.DisablePlayerControl();
+        GameManager.DisablePlayerControl();
         _showPanelSequence.Restart();
     }
 
@@ -53,7 +53,7 @@ public class DialogPanel : BasePanel
         base.OnHide();
         _hidePanelSequence.Restart();
         Pointer.gameObject.SetActive(false);
-        GameManager.Instance.EnablePlayerControl();
+        GameManager.EnablePlayerControl();
         canUpdate = false;
     }
 

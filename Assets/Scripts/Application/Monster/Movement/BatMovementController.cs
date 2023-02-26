@@ -9,9 +9,9 @@ public class BatMovementController : MonsterMovementController
     public float sinMultiplier = 0.3f;
     protected Transform batTF;
     private PointHandler ph;
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
+        base.Init(obj, userData);
         batInfo = _core.info as BatInfo;
         batTF = transform;
         ph = GetComponentInCore<PointHandler>();
@@ -74,24 +74,24 @@ public class BatMovementController : MonsterMovementController
     {
 
         HorizontalFollow();
-        if (Mathf.Abs(ph.GetBornPoint.x - batTF.position.x) > batInfo.patrolRange)
+        if (Mathf.Abs(ph.GetBirthPoint.x - batTF.position.x) > batInfo.patrolRange)
         {
-            if (ph.GetBornPoint.x < batTF.position.x)
+            if (ph.GetBirthPoint.x < batTF.position.x)
             {
                 SetVelocityXAndFlip(-batInfo.moveSpeed, true);
             }
 
-            else if (ph.GetBornPoint.x > batTF.position.x)
+            else if (ph.GetBirthPoint.x > batTF.position.x)
             {
                 SetVelocityXAndFlip(batInfo.moveSpeed, true);
             }
         }
 
-        if (batTF.position.y < ph.GetBornPoint.y)
+        if (batTF.position.y < ph.GetBirthPoint.y)
         {
             SetVelocityY(batInfo.moveSpeed);
         }
-        else if (batTF.position.y > ph.GetBornPoint.y + batInfo.patrolRange)
+        else if (batTF.position.y > ph.GetBirthPoint.y + batInfo.patrolRange)
         {
             SetVelocityY(-batInfo.moveSpeed);
         }

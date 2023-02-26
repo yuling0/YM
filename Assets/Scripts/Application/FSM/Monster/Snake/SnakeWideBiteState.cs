@@ -18,14 +18,26 @@ public class SnakeWideBiteState : MonsterAttackState
     }
     protected override void DetectContinuousAttack()
     {
-        if (_hh.DetectAttackHit(targetCollider, _info.targetMask))
+        if (_hh.DetectAttackHit(raycastHits, _info.targetMask , out int hitCount))
         {
-            foreach (var collider in targetCollider)
+            //foreach (var collider in targetCollider)
+            //{
+            //    if (collider.CompareTag("Player") && !detectedSet.Contains(collider))
+            //    {
+            //        EventMgr.Instance.OnMultiParameterEventTrigger(PlayerBeHitEventArgs.Create(0, _mmc.IsFacingRight ? 2 : -2));
+            //        detectedSet.Add(collider);
+            //        _mmc.SetVelocityX(-0.1f);
+            //        _fsm.ChangeState(Consts.S_WideBiteHitState);
+            //        break;
+            //    }
+            //}
+            for (int i = 0; i < hitCount; i++)
             {
-                if (collider.CompareTag("Player") && !detectedSet.Contains(collider))
+                GameObject hitGameObject = raycastHits[i].transform.gameObject;
+                if (hitGameObject.CompareTag("Player"))
                 {
                     EventMgr.Instance.OnMultiParameterEventTrigger(PlayerBeHitEventArgs.Create(0, _mmc.IsFacingRight ? 2 : -2));
-                    detectedSet.Add(collider);
+                    detectedSet.Add(hitGameObject);
                     _mmc.SetVelocityX(-0.1f);
                     _fsm.ChangeState(Consts.S_WideBiteHitState);
                     break;

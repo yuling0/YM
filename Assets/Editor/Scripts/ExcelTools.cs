@@ -161,7 +161,7 @@ public static class ExcelTools
                 {
                     string typeString = typeRow[j].ToString();
 
-                    if (typeString == "int" || typeString.StartsWith("E_"))    //是int类型或者枚举
+                    if (typeString == "int" )    //是int类型或者枚举
                     {
                         fs.Write(BitConverter.GetBytes(int.Parse(curRow[j].ToString())), 0, 4);
                     }
@@ -169,7 +169,7 @@ public static class ExcelTools
                     {
                         fs.Write(BitConverter.GetBytes(float.Parse(curRow[j].ToString())), 0, 4);
                     }
-                    else if (typeString == "string" || typeString.StartsWith("List<") || typeString.StartsWith("Dictionary<"))
+                    else if (typeString == "string" || typeString.StartsWith("List<") || typeString.StartsWith("Dictionary<") || typeString == "Vector3" || typeString.StartsWith("E_"))
                     {
                         var bs = Encoding.UTF8.GetBytes(curRow[j].ToString());
                         fs.Write(BitConverter.GetBytes(bs.Length), 0, 4);

@@ -6,8 +6,7 @@ public class FallStayState : PlayerBaseState
 {
     float leftPressTimer;
     float rightPressTimer;
-    float timeVariation = 8f;
-    float bufferMultiplier = 4f;
+    float bufferMultiplier = 6f;
     public FallStayState(BaseFSM fsm, Core core, string normalAnim, string battleAnim = null) : base(fsm, core, normalAnim, battleAnim)
     {
         AddTargetState(() => _ih.isDownAttack, Consts.S_DownStabEnterState);
@@ -26,12 +25,12 @@ public class FallStayState : PlayerBaseState
     {
         if (_ih.isLeftWalk)
         {
-            leftPressTimer += Time.deltaTime * timeVariation;
+            leftPressTimer += Time.deltaTime;
         }
 
         if (_ih.isRightWalk)
         {
-            rightPressTimer += Time.deltaTime * timeVariation;
+            rightPressTimer += Time.deltaTime;
         }
 
     }
@@ -39,12 +38,17 @@ public class FallStayState : PlayerBaseState
     public override void OnFixedUpdate()
     {
         _mc.Fall();
+        if (_ih.AbsH == 0)
+        {
+            _mc.AddAirFriction(0.1f);
+        }
     }
 
     public override void OnExit()
     {
         base.OnExit();
-        _pfsm.bufferSpeed = Mathf.Min(Mathf.Abs(leftPressTimer - rightPressTimer), 1f) * bufferMultiplier;
+        Debug.Log("°´¼üÊ±¼ä" + Mathf.Abs(leftPressTimer - rightPressTimer));
+        _pfsm.bufferSpeed = Mathf.Min(Mathf.Abs(leftPressTimer - rightPressTimer), 2f) * bufferMultiplier;
         //_mc.SetVelocityX(Mathf.Min(Mathf.Abs(leftPressTimer - rightPressTimer), 1f) * bufferSpeed);
     }
 

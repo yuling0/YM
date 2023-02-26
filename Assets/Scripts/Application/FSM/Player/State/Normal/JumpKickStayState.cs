@@ -5,14 +5,14 @@ using UnityEngine;
 public class JumpKickStayState : PlayerBaseState
 {
     HitHandler hh;
-    private Collider2D[] targetCollilder;
+    private RaycastHit2D[] raycastHits;
 
     public JumpKickStayState(BaseFSM fsm, Core core, string normalAnim, string battleAnim = null) : base(fsm, core, normalAnim, battleAnim)
     {
         AddTargetState(() => _mc.IsGrounded && _ac.CurAnimNormalizedTime >= 1, Consts.S_JumpKickNoHit);
         hh = _core.GetComponentInCore<HitHandler>();
 
-        targetCollilder = new Collider2D[1];
+        raycastHits = new RaycastHit2D[1];
     }
     public override void OnEnter()
     {
@@ -24,7 +24,7 @@ public class JumpKickStayState : PlayerBaseState
 
     public override void OnUpdate()
     {
-        if (hh.DetectAttackHit(targetCollilder, _erqieInfo.targetMask))
+        if (hh.DetectAttackHit(raycastHits, _erqieInfo.targetMask,out int hitCount))
         {
             //Debug.Log(c2.gameObject.name);
             _fsm.ChangeState(Consts.S_JumpKickHit);

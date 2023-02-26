@@ -41,11 +41,15 @@ public class JumpState : PlayerBaseState
             jumpEnterPlayed = true;
         }
 
-        _mc.Jump();
+        //_mc.Jump();
 
     }
     public override void OnFixedUpdate()
     {
         _mc.Jump();
+        if (_ih.AbsH == 0)
+        {
+            _mc.AddAirFriction(0.1f);
+        }
     }
 }

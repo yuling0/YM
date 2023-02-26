@@ -44,11 +44,12 @@ public enum E_TweenState
     Killed
 }
 
-public enum E_UnitCamp
+public enum E_UnitType
 {
-    player,
+    Player,
     Emeny,
-    NPC
+    NPC,
+    Other
 }
 
 /// <summary>

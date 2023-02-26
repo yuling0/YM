@@ -92,6 +92,20 @@ public class StorySystem : SingletonBase<StorySystem>
         return res;
     }
 
+    public bool CheckEventTriggerOnCutscenePlayed(string cutsceneName)
+    {
+        bool res = false;
+        foreach (var id in curChapter.eventIdList)
+        {
+            res |= storyTriggerManager.CheckEventTriggerOnCutscenePlayed(id, cutsceneName);
+            if (res)
+            {
+                break;
+            }
+        }
+        return res;
+    }
+
     public int GetSceneLoadDataID(int sceneId)
     {
         int res = -1;

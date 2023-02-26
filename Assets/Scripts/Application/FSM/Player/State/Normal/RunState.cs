@@ -25,7 +25,7 @@ public class RunState : PlayerBaseState
 
         AddTargetState(() => _sh.GetCurrentSkillName() == Consts.J_Up, Consts.S_Defend);
 
-        AddTargetState(() => _mc.Velocity.magnitude <= _erqieInfo.walkSpeed, Consts.S_Walk);
+        AddTargetState(() => _mc.Velocity.magnitude < _erqieInfo.walkSpeed + ((_erqieInfo.runSpeed - _erqieInfo.walkSpeed) / 2), Consts.S_Walk);
 
         //AddTargetState(() => _mc.GetVelocity.x == 0f, Consts.S_Idle);
 

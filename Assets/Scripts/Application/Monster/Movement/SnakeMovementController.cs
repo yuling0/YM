@@ -8,9 +8,9 @@ public class SnakeMovementController : MonsterMovementController
 
     public Vector2 boxSize;
     public float xOffset;
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
+        base.Init(obj, userData);
         snakeInfo = obj.info as SnakeInfo;
 
     }

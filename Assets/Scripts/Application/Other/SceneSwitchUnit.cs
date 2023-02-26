@@ -46,11 +46,18 @@ public class SceneSwitchUnit : UnitLogic
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        inRanage = true;
+        if (collision.CompareTag("Player"))
+        {
+            inRanage = true;
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        inRanage = false;
+        if (collision.CompareTag("Player"))
+        {
+            inRanage = false;
+        }
     }
 }

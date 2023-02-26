@@ -36,7 +36,7 @@ public class WalkState : PlayerBaseState
 
         //AddTargetState(() => Mathf.Abs(_mc.Velocity.x) < 0.01f && 
         //(_mc.IsFacingRight && !_ih.isRightWalk || !_mc.IsFacingRight && !_ih.isLeftWalk), Consts.S_Idle);
-        AddTargetState(() => _mc.Velocity.sqrMagnitude < 0.05f, Consts.S_Idle);
+        AddTargetState(() => _ih.AbsH == 0 && _mc.Velocity.sqrMagnitude < 0.05f, Consts.S_Idle);
         AddTargetState(() => _ih.jumpPress, Consts.S_Jump);
 
         AddTargetState(() => _mc.IsFacingRight && _ih.isRightRunning /*&& _mc.Velocity.x > 0*/

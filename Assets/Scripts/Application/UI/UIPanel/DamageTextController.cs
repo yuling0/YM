@@ -20,23 +20,30 @@ public class DamageTextObject : ObjectBase
         base.Release();
         damageText = null;
     }
+
+    internal override void OnUnSpawn()
+    {
+        damageText.UnSpawn();
+    }
 }
-public class DamageTextController : UIComponent
+public class DamageTextController
 {
     IObjectPool<DamageTextObject> damageTextPool;
     List<DamageText> updateList;
     static string damageTextPrefabPath = Consts.P_UI + "DamageText";
-    public override void OnInit()
+    GameObject damageNumberObjectContainer;
+
+    public DamageTextController()
     {
-        base.OnInit();
+        damageNumberObjectContainer = new GameObject("DamageNumberObjectContainer");
+        Object.DontDestroyOnLoad(damageNumberObjectContainer);
         damageTextPool = ObjectPoolManager.Instance.CreateObjectPool<DamageTextObject>(nameof(damageTextPool));
         updateList = new List<DamageText>();
+        EventMgr.Instance.AddMultiParameterEventListener<DamageTextEventArgs>(GenerateDamageText);
     }
 
-    public override void OnUpdate()
+    public void OnUpdate()
     {
-        base.OnUpdate();
-
         for (int i = updateList.Count - 1; i >= 0 ; i --)
         {
             DamageText cur = updateList[i];
@@ -50,11 +57,15 @@ public class DamageTextController : UIComponent
                 cur.OnUpdate();
             }
         }
-
     }
-    public void GenerateDamageText(int damageValue,Vector2 screenPosition)
+    private void GenerateDamageText(DamageTextEventArgs args)
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(_rt, screenPosition, null, out Vector2 localPoint);
+        GenerateDamageText(args.Damage, args.ScreenPosition);
+        ReferencePool.Instance.Release(args);
+    }
+    private void GenerateDamageText(int damageValue,Vector2 worldPosition)
+    {
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(_rt, screenPosition, null, out Vector2 localPoint);
 
         DamageTextObject damageTextObject = damageTextPool.Spawn();
         if (damageTextObject == null)
@@ -64,19 +75,24 @@ public class DamageTextController : UIComponent
                 DamageTextObject textObject = DamageTextObject.Create(text);
                 damageTextPool.Register(textObject, true);
                 updateList.Add(text);
-                text.transform.localPosition = localPoint;
+                text.transform.position = worldPosition;
                 text.OnInit(damageValue);
-                text.transform.SetParent(this.transform, false);
+                text.transform.SetParent(damageNumberObjectContainer.transform, true);
             });
         }
         else
         {
-
             updateList.Add(damageTextObject.DamageText);
-            damageTextObject.DamageText.transform.localPosition = localPoint;
+            damageTextObject.DamageText.transform.position = worldPosition;
             damageTextObject.DamageText.OnInit(damageValue);
         }
     }
 
-
+    private void Release()
+    {
+        foreach (DamageText damageText in updateList)
+        {
+            damageTextPool.UnSpawn(damageText);
+        }
+    }
 }

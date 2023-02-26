@@ -8,9 +8,9 @@ public class SoundHandler : ComponentBase
     public float characterSoundIntervalTimer;       //播放角色音效时间间隔
     public float intervalTimer;
 
-    public override void Init(Core core)
+    public override void Init(Core core, object userData)
     {
-        base.Init(core);
+        base.Init(core, userData);
         sm = SoundManager.Instance;
     }
 

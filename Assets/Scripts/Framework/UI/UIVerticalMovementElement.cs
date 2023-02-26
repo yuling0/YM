@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class UIVerticalMovementElement : UIComponent
 {
-    public float _vOffset;      //水平移动量
-    public float orignY;
+    public float endY;      //垂直移动量
+    public float originY;
     public override void OnInit()
     {
         base.OnInit();
-        orignY = _rt.anchoredPosition.y;
-        _showAnim = _rt.DoAnchorPosY(orignY, showAnimDuration);
-        _hideAnim = _rt.DoAnchorPosY(orignY + _vOffset, hideAnimDuration);
+        _showAnim = _rt.DoAnchorPosY(new Vector2(0, originY),endY, showAnimDuration);
+        _hideAnim = _rt.DoAnchorPosY(originY, hideAnimDuration);
     }
 }

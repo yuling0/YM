@@ -2,59 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : SingletonBase<GameManager>
+public class GameManager : MonoBehaviour
 {
-    private GameManager ()
-    {
-    }
-    private  Transform _playerTF;
-    private Core _playerCore;
-    public  Transform PlayerTF
+    private static Transform _playerTF;
+    private static Core _playerCore;
+    private DamageTextController damageTextController;
+    public static  Transform PlayerTF
     {
         get
         {
             if (_playerTF == null)
             {
-                //Unit arche = UnitManager.Instance.GetUnit("Arche");
-                //if (arche == null)
-                //{
-                //    Debug.Log("Arche不存在");
-                //    return null;
-                //}
-                //_playerTF = arche.transform;
-                _playerTF = GameObject.FindGameObjectWithTag("Player").transform;
-
-                if (_playerTF == null)
+                if (_playerCore == null)
                 {
-                    Debug.Log("Arche不存在");
-                    return null;
+                    Unit arche = UnitManager.Instance.GetUnit("Arche");
+                    if (arche == null)
+                    {
+                        Debug.LogError("当前场景中不存在玩家对象");
+                    }
+                    _playerCore = arche.UnitLogic as Core;
                 }
-                _playerCore = _playerTF.GetComponent<Core>();
-
-                if (_playerTF == null)
-                {
-                    Debug.Log("玩家不存在");
-                }
+                _playerTF = _playerCore.transform;
             }
             return _playerTF;
         }
     }
+    public static Core PlayerCore
+    {
+        set { _playerCore = value; }
+        get => _playerCore;
+    }
+    private void Awake()
+    {
+        InitGameModule();
+    }
 
-    public void GamePauseOrContinue()
+    private void InitGameModule()
+    {
+        BinaryDataManager.Instance.Init();
+        damageTextController = new DamageTextController();
+        CutsceneManager.Instance.Init();
+        DialogueManager.Instance.Init();
+        SoundManager.Instance.Init();
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        damageTextController.OnUpdate();
+    }
+    public static void GamePauseOrContinue()
     {
         Time.timeScale = Time.timeScale > 0f ? 0f : 1f;
         _playerCore.enabled = Time.timeScale > 0f ? true : false;
     }
 
     //TODO:这里需要改成UnitManager获取
-    public void EnablePlayerControl()
+    public static void EnablePlayerControl()
     {
-        //_playerCore.enabled = true;
+        if (_playerCore == null || CutsceneManager.Instance.IsPlaying || DialogueManager.Instance.IsInDialog) return;
+        _playerCore.Enable = true;
     }
-    public void DisablePlayerControl()
+    public static void DisablePlayerControl()
     {
-        //_playerCore.enabled = false;
+        if (_playerCore == null) return;
+        _playerCore.Enable = false;
     }
 
-    public bool testBool = false;
+
 }

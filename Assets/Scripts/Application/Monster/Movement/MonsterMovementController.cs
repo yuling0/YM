@@ -8,17 +8,20 @@ public class MonsterMovementController : MovementController
     public Vector3 distance;          //移动方向向量
     protected MonsterInfo _info;        //怪物信息
     PointHandler _ph;                   //巡逻点和出生点管理者
-    Transform curPatrolPoint;           //当前巡逻点
+    Vector3 curPatrolPoint;           //当前巡逻点
 
-    public override void Init(Core obj)
+    public override void Init(Core obj, object userData)
     {
-        base.Init(obj);
-        _playerTF = GameManager.Instance.PlayerTF;
+        base.Init(obj, userData);
+        _playerTF = GameManager.PlayerTF;
         _info = obj.info as MonsterInfo;
         _ph = obj.GetComponentInCore<PointHandler>();
-        curPatrolPoint = _ph?.GetCurrentPatrolPoint;
     }
 
+    public override void OnEnableComponent()
+    {
+        curPatrolPoint = _ph.GetCurrentPatrolPoint;
+    }
     public override void OnUpdateComponent()
     {
         base.OnUpdateComponent();
@@ -78,13 +81,13 @@ public class MonsterMovementController : MovementController
     public virtual void Patrol()
     {
         //已到达目标点，更换巡逻点
-        if (Mathf.Abs(curPatrolPoint.position.x - transform.position.x) < 0.1f)
+        if (Mathf.Abs(curPatrolPoint.x - transform.position.x) < 0.1f)
         {
             curPatrolPoint = _ph.GetCurrentPatrolPoint;
         }
 
         //右移
-        if (curPatrolPoint.position.x > transform.position.x)
+        if (curPatrolPoint.x > transform.position.x)
         {
             SetVelocityX(_info.moveSpeed,false);
         }
@@ -94,7 +97,7 @@ public class MonsterMovementController : MovementController
             SetVelocityX(-_info.moveSpeed,false);
         }
         //切换方向
-        if (isFacingRight && curPatrolPoint.position.x < transform.position.x || !isFacingRight && curPatrolPoint.position.x > transform.position.x)
+        if (isFacingRight && curPatrolPoint.x < transform.position.x || !isFacingRight && curPatrolPoint.x > transform.position.x)
         {
             Flip();
         }

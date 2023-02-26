@@ -7,7 +7,7 @@ public class StoryEventData
 	/// </summary>
 	public int eventId;
 	/// <summary>
-	///剧情事件名称
+	///剧情事件名称（代码里不会用，方便自己看的）
 	/// </summary>
 	public string eventName;
 	/// <summary>

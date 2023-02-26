@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public interface IInit<T>
 {
-    void Init(T obj);
+    void Init(T obj , object userData);
 }
 
 public interface IInit

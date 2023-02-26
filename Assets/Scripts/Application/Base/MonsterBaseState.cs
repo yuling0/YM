@@ -17,7 +17,7 @@ public class MonsterBaseState : BaseState
         _mfsm = fsm as MonsterFSM;
         _mmc = core.GetComponentInCore<MonsterMovementController>();
         _ac = core.GetComponentInCore<AnimationController>();
-        _ptf = GameManager.Instance.PlayerTF;
+        _ptf = GameManager.PlayerTF;
         _info = core.info as MonsterInfo;
         _animName = animName;
         _monsterTF = _mmc.transform;

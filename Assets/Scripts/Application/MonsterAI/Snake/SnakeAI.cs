@@ -11,7 +11,7 @@ public class SnakeAI : MonsterAI
     SnakeMovementController smc;
     SnakeInfo snakeInfo;
     HitHandler hitHandler;
-    Collider2D [] attackResult;
+    RaycastHit2D [] raycastHits;
 
     public bool isIdle;
     public bool isPatrol;
@@ -26,7 +26,7 @@ public class SnakeAI : MonsterAI
         smc = GetComponentInCore<SnakeMovementController>();
         snakeInfo = info as SnakeInfo;
         hitHandler = GetComponentInCore<HitHandler>();
-        attackResult = new Collider2D[3];
+        raycastHits = new RaycastHit2D[3];
 
         StartCoroutine(RandomBehavior());
     }
@@ -58,7 +58,7 @@ public class SnakeAI : MonsterAI
         wideBiteTimer += Time.deltaTime;
         if (isContinuousAttacking)
         {
-            if (hitHandler.DetectAttackHit(attackResult, info.targetMask))
+            if (hitHandler.DetectAttackHit(raycastHits, info.targetMask,out int hitCount))
             {
                 //isHit = true;
                 blackboard.SetTrigger("isHit");
@@ -120,7 +120,7 @@ public class SnakeAI : MonsterAI
     }
     protected override void OnceAttackTrigger()
     {
-        if (hitHandler.DetectAttackHit(attackResult, info.targetMask))
+        if (hitHandler.DetectAttackHit(raycastHits, info.targetMask, out int hitCount))
         {
             //isHit = true;
             //blackboard.SetTrigger("isHit");
